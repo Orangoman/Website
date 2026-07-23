@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flag Guesser</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -9,20 +10,31 @@
     <div id="game-container">
         <h1>Guess the Flag!</h1>
         <p>Score: <span id="score">0</span></p>
-        
+
         <div class="flag-display">
-            <!-- The src will be injected by JavaScript -->
             <img id="flag-image" src="" alt="Guess this flag" width="300">
         </div>
 
         <div class="input-area">
-            <input type="text" id="guess-input" placeholder="Type country name..." autofocus autocomplete="off">
+            <!-- 1. list="country-options" links this input box to the datalist below -->
+            <input 
+              type="text" 
+              id="guess-input" 
+              list="country-options" 
+              placeholder="Start typing a country..." 
+              autofocus 
+              autocomplete="off"
+            >
+
+            <!-- 2. The browser automatically turns this into a dropdown menu -->
+            <datalist id="country-options"></datalist>
+
             <button id="submit-btn">Submit</button>
         </div>
-        
+
         <p id="feedback"></p>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
