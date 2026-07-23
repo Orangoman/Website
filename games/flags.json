@@ -1,0 +1,5 @@
+[
+  { "name": "United States", "image": "images/us.svg" },
+  { "name": "Japan", "image": "images/jp.svg" },
+  { "name": "United Kingdom", "image": "images/uk.svg" }
+]
