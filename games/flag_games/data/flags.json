@@ -1,5 +1,5 @@
 [
-  { "name": "United States", "image": "images/us.svg" },
-  { "name": "Japan", "image": "images/jp.svg" },
-  { "name": "United Kingdom", "image": "images/uk.svg" }
+  { "name": "United States", "image": "images/us.png" },
+  { "name": "Japan", "image": "images/jp.png" },
+  { "name": "United Kingdom", "image": "images/uk.png" }
 ]
