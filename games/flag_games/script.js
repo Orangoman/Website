@@ -7,7 +7,8 @@ let lives = 3;
 let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
-// Screen Navigation Functions (Global Scope for inline onclicks)
+
+// 1. Screen Navigation Functions
 function showMainMenu() {
     document.getElementById('main-menu').removeAttribute('hidden');
     document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
@@ -26,8 +27,7 @@ function showMultiplayer() {
     document.getElementById('multiplayer-screen').removeAttribute('hidden');
 }
 
-// ... Rest of your existing game script below ...
-// 1. Fetch JSON Data safely across GitHub Pages paths
+// 2. Fetch JSON Data safely across GitHub Pages paths
 async function loadFlags() {
     const paths = [
         'flags.json?v=' + Date.now(),
@@ -58,7 +58,7 @@ async function loadFlags() {
     }
 }
 
-// 2. Filter flags based on selected region
+// 3. Filter flags based on selected region
 function updateActiveFlags() {
     const selectElement = document.getElementById('region-select');
     const rawValue = selectElement ? selectElement.value.trim() : 'World';
@@ -80,7 +80,7 @@ function updateActiveFlags() {
     }
 }
 
-// 3. Start Game (Reveals the hidden game board)
+// 4. Start Game (Reveals the hidden game board)
 function startGame() {
     if (!allFlags || allFlags.length === 0) {
         alert("Flags are still loading or failed to load. Please refresh the page.");
@@ -134,7 +134,7 @@ function startGame() {
     nextFlag();
 }
 
-// 4. Autocomplete Datalist
+// 5. Autocomplete Datalist
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
@@ -148,7 +148,7 @@ function populateCountryDropdown(flagList) {
     });
 }
 
-// 5. Game Loop Controls
+// 6. Game Loop Controls
 function updateTimer() {
     timeRemaining--;
     const timerEl = document.getElementById('timer');
@@ -234,8 +234,18 @@ function endGame(message) {
     if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 6. Safe Initialization (Guarantees listeners attach even if page is already loaded)
+// 7. Initialization & Event Listeners
 function init() {
+    // Navigation listeners
+    const spBtn = document.getElementById('choose-sp-btn');
+    const mpBtn = document.getElementById('choose-mp-btn');
+    const backBtns = document.querySelectorAll('.back-btn');
+
+    if (spBtn) spBtn.addEventListener('click', showSinglePlayer);
+    if (mpBtn) mpBtn.addEventListener('click', showMultiplayer);
+    backBtns.forEach(btn => btn.addEventListener('click', showMainMenu));
+
+    // Gameplay listeners
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
     const guessInput = document.getElementById('guess-input');
@@ -252,49 +262,9 @@ function init() {
     loadFlags();
 }
 
+// Safely trigger initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
-    init();
-}
-// Screen Navigation Functions
-function showMainMenu() {
-    document.getElementById('main-menu').removeAttribute('hidden');
-    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
-    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
-}
-
-function showSinglePlayer() {
-    document.getElementById('main-menu').setAttribute('hidden', 'true');
-    document.getElementById('singleplayer-screen').removeAttribute('hidden');
-}
-
-function showMultiplayer() {
-    document.getElementById('main-menu').setAttribute('hidden', 'true');
-    document.getElementById('multiplayer-screen').removeAttribute('hidden');
-}
-
-// Bind Navigation Events in init()
-function initNavigation() {
-    const spBtn = document.getElementById('choose-sp-btn');
-    const mpBtn = document.getElementById('choose-mp-btn');
-    const backBtns = document.querySelectorAll('.back-btn');
-
-    if (spBtn) spBtn.addEventListener('click', showSinglePlayer);
-    if (mpBtn) mpBtn.addEventListener('click', showMultiplayer);
-    
-    backBtns.forEach(btn => {
-        btn.addEventListener('click', showMainMenu);
-    });
-}
-
-// Add initNavigation() inside your existing DOM loading block
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        initNavigation();
-        init(); // Calls your existing start-up logic
-    });
-} else {
-    initNavigation();
     init();
 }
