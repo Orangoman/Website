@@ -8,10 +8,14 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// Multiplayer state variables
+// Real-Time PeerJS Networking Variables
+let peer = null;
+let connections = []; // Host uses this to track joined clients
+let hostConn = null;   // Guest uses this to send data to Host
 let currentRoomCode = null;
 let isHost = false;
 let roomPlayers = [];
+let myPlayerName = "";
 
 // 1. Screen Navigation Functions
 function showMainMenu() {
@@ -44,47 +48,103 @@ function showMultiplayer() {
     if (mp) mp.removeAttribute('hidden');
 }
 
-// 2. Multiplayer Lobby Functions
+// 2. Real-Time PeerJS Multiplayer Logic
 function createLobby() {
     const nameInput = document.getElementById('player-name');
-    const playerName = nameInput ? nameInput.value.trim() : '';
+    myPlayerName = nameInput ? nameInput.value.trim() : '';
 
-    if (!playerName) {
+    if (!myPlayerName) {
         alert("Please enter a nickname first!");
         return;
     }
 
-    // Generate random 4-character room code
-    currentRoomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const rawCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+    currentRoomCode = rawCode;
     isHost = true;
-    roomPlayers = [{ name: playerName, isHost: true }];
+    roomPlayers = [{ name: myPlayerName, isHost: true }];
 
-    updateWaitingRoomUI();
+    // Register peer on public PeerJS network
+    const peerId = 'flaggame-' + currentRoomCode;
+    peer = new Peer(peerId);
+
+    peer.on('open', () => {
+        console.log("👑 Lobby created on PeerJS network with Code:", currentRoomCode);
+        updateWaitingRoomUI();
+    });
+
+    peer.on('connection', (conn) => {
+        connections.push(conn);
+
+        conn.on('data', (data) => {
+            if (data.type === 'JOIN') {
+                roomPlayers.push({ name: data.playerName, isHost: false });
+                broadcastToAll({ type: 'PLAYER_LIST', players: roomPlayers });
+                updateWaitingRoomUI();
+            }
+        });
+
+        conn.on('close', () => {
+            connections = connections.filter(c => c !== conn);
+        });
+    });
+
+    peer.on('error', (err) => {
+        console.error("PeerJS Error:", err);
+        alert("Could not create lobby code. Please try again!");
+    });
 }
 
 function joinLobby() {
     const nameInput = document.getElementById('player-name');
     const codeInput = document.getElementById('room-code-input');
 
-    const playerName = nameInput ? nameInput.value.trim() : '';
-    const roomCode = codeInput ? codeInput.value.trim().toUpperCase() : '';
+    myPlayerName = nameInput ? nameInput.value.trim() : '';
+    const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
 
-    if (!playerName) {
+    if (!myPlayerName) {
         alert("Please enter a nickname first!");
         return;
     }
-    if (!roomCode) {
+    if (!code) {
         alert("Please enter a room code!");
         return;
     }
 
-    currentRoomCode = roomCode;
+    currentRoomCode = code;
     isHost = false;
-    
-    // Add current player to the lobby list
-    roomPlayers = [{ name: "Host Player", isHost: true }, { name: playerName, isHost: false }];
 
-    updateWaitingRoomUI();
+    peer = new Peer();
+
+    peer.on('open', () => {
+        const targetPeerId = 'flaggame-' + currentRoomCode;
+        hostConn = peer.connect(targetPeerId);
+
+        hostConn.on('open', () => {
+            console.log("Connected to Host room:", currentRoomCode);
+            hostConn.send({ type: 'JOIN', playerName: myPlayerName });
+            updateWaitingRoomUI();
+        });
+
+        hostConn.on('data', (data) => {
+            if (data.type === 'PLAYER_LIST') {
+                roomPlayers = data.players;
+                updateWaitingRoomUI();
+            }
+            if (data.type === 'START_GAME') {
+                launchMultiplayerBoard();
+            }
+        });
+
+        hostConn.on('error', () => {
+            alert("Could not find room code: " + currentRoomCode);
+        });
+    });
+}
+
+function broadcastToAll(data) {
+    connections.forEach(conn => {
+        if (conn.open) conn.send(data);
+    });
 }
 
 function updateWaitingRoomUI() {
@@ -92,6 +152,7 @@ function updateWaitingRoomUI() {
     const roomCodeDisplay = document.getElementById('display-room-code');
     const playerList = document.getElementById('player-list');
     const startMpBtn = document.getElementById('start-multiplayer-btn');
+    const statusText = document.getElementById('lobby-status');
 
     if (waitingRoom) waitingRoom.removeAttribute('hidden');
     if (roomCodeDisplay) roomCodeDisplay.textContent = currentRoomCode;
@@ -103,15 +164,28 @@ function updateWaitingRoomUI() {
     if (startMpBtn) {
         if (isHost) {
             startMpBtn.removeAttribute('hidden');
+            if (statusText) statusText.textContent = "You are the host! Click start when everyone is ready.";
         } else {
             startMpBtn.setAttribute('hidden', 'true');
+            if (statusText) statusText.textContent = "Waiting for host to start the game...";
         }
     }
 }
 
 function startMultiplayerGame() {
-    alert("Starting multiplayer game for room " + currentRoomCode + "!");
-    // You can transition to the flag game board here!
+    if (!isHost) return;
+    broadcastToAll({ type: 'START_GAME' });
+    launchMultiplayerBoard();
+}
+
+function launchMultiplayerBoard() {
+    const waitingRoom = document.getElementById('waiting-room');
+    const mpGameArea = document.getElementById('mp-game-area');
+
+    if (waitingRoom) waitingRoom.setAttribute('hidden', 'true');
+    if (mpGameArea) mpGameArea.removeAttribute('hidden');
+
+    startGame(); // Fires single player flag engine on everyone's screen simultaneously!
 }
 
 // 3. Fetch JSON Data safely across GitHub Pages paths
@@ -132,17 +206,10 @@ async function loadFlags() {
                 console.log("✅ Flags loaded successfully from:", path, "Total:", allFlags.length);
                 return;
             }
-        } catch (e) {
-            // Check next potential path
-        }
+        } catch (e) {}
     }
 
     console.error("❌ Could not load flags.json from any path.");
-    const feedbackEl = document.getElementById('feedback');
-    if (feedbackEl) {
-        feedbackEl.textContent = "❌ Failed to load flags.json. Make sure flags.json is uploaded to GitHub in the same folder as flag_game.html!";
-        feedbackEl.style.color = "red";
-    }
 }
 
 // 4. Filter flags based on selected region
@@ -161,10 +228,7 @@ function updateActiveFlags() {
         });
     }
 
-    if (activeFlags.length === 0) {
-        console.warn("No flags matched region filter. Falling back to all flags.");
-        activeFlags = [...allFlags];
-    }
+    if (activeFlags.length === 0) activeFlags = [...allFlags];
 }
 
 // 5. Start Game
@@ -175,9 +239,7 @@ function startGame() {
     }
 
     const gameArea = document.getElementById('game-area');
-    if (gameArea) {
-        gameArea.removeAttribute('hidden');
-    }
+    if (gameArea) gameArea.removeAttribute('hidden');
 
     const startBtn = document.getElementById('start-btn');
     if (startBtn) startBtn.textContent = "Restart Game";
@@ -239,9 +301,7 @@ function updateTimer() {
     timeRemaining--;
     const timerEl = document.getElementById('timer');
     if (timerEl) timerEl.textContent = timeRemaining;
-    if (timeRemaining <= 0) {
-        endGame("⏱️ Time's up!");
-    }
+    if (timeRemaining <= 0) endGame("⏱️ Time's up!");
 }
 
 function updateLivesDisplay() {
@@ -256,21 +316,21 @@ function nextFlag() {
     currentFlag = activeFlags[randomIndex];
 
     const flagImg = document.getElementById('flag-image');
-    if (flagImg && currentFlag) {
-        flagImg.src = currentFlag.image;
-    }
+    const mpFlagImg = document.getElementById('mp-flag-image');
+
+    if (flagImg && currentFlag) flagImg.src = currentFlag.image;
+    if (mpFlagImg && currentFlag) mpFlagImg.src = currentFlag.image;
 
     const input = document.getElementById('guess-input');
-    if (input) {
-        input.value = "";
-        input.focus();
-    }
+    const mpInput = document.getElementById('mp-guess-input');
+    if (input) { input.value = ""; input.focus(); }
+    if (mpInput) { mpInput.value = ""; mpInput.focus(); }
 }
 
 function checkGuess() {
     if (!gameActive) return;
 
-    const inputField = document.getElementById('guess-input');
+    const inputField = document.getElementById('guess-input') || document.getElementById('mp-guess-input');
     if (!inputField) return;
 
     const userGuess = inputField.value.trim();
@@ -284,14 +344,14 @@ function checkGuess() {
         const scoreEl = document.getElementById('score');
         if (scoreEl) scoreEl.textContent = score;
 
-        const feedbackEl = document.getElementById('feedback');
+        const feedbackEl = document.getElementById('feedback') || document.getElementById('mp-feedback');
         if (feedbackEl) {
             feedbackEl.textContent = "Correct! 🎉";
             feedbackEl.style.color = "green";
         }
         nextFlag();
     } else {
-        const feedbackEl = document.getElementById('feedback');
+        const feedbackEl = document.getElementById('feedback') || document.getElementById('mp-feedback');
         if (feedbackEl) {
             feedbackEl.textContent = "Wrong answer! ❌";
             feedbackEl.style.color = "red";
@@ -300,9 +360,7 @@ function checkGuess() {
         if (mode === 'survival') {
             lives--;
             updateLivesDisplay();
-            if (lives <= 0) {
-                endGame("💥 Game Over! You ran out of lives.");
-            }
+            if (lives <= 0) endGame("💥 Game Over! You ran out of lives.");
         }
     }
 }
@@ -313,24 +371,32 @@ function endGame(message) {
 
     const guessInput = document.getElementById('guess-input');
     const submitBtn = document.getElementById('submit-btn');
-    const feedbackEl = document.getElementById('feedback');
+    const feedbackEl = document.getElementById('feedback') || document.getElementById('mp-feedback');
 
     if (guessInput) guessInput.disabled = true;
     if (submitBtn) submitBtn.disabled = true;
     if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 8. Initialization & Event Listeners
+// 8. Initialization
 function init() {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
+    const mpSubmitBtn = document.getElementById('mp-submit-btn');
     const guessInput = document.getElementById('guess-input');
+    const mpGuessInput = document.getElementById('mp-guess-input');
 
     if (startBtn) startBtn.addEventListener('click', startGame);
     if (submitBtn) submitBtn.addEventListener('click', checkGuess);
+    if (mpSubmitBtn) mpSubmitBtn.addEventListener('click', checkGuess);
 
     if (guessInput) {
         guessInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkGuess();
+        });
+    }
+    if (mpGuessInput) {
+        mpGuessInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkGuess();
         });
     }

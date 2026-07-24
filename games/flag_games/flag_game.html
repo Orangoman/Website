@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guess the Flag!</title>
+    <!-- PeerJS Library for direct Browser-to-Browser Multiplayer -->
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
     <style>
         body { font-family: sans-serif; text-align: center; }
         #game-container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -16,7 +19,7 @@
         #submit-btn, #start-btn, #create-room-btn, #join-room-btn, #start-multiplayer-btn { padding: 8px 16px; font-size: 16px; cursor: pointer; }
         #flag-image { max-width: 100%; height: auto; border: 2px solid #ccc; border-radius: 8px; margin-top: 10px; }
         #player-list { list-style: none; padding: 0; }
-        #player-list li { background: #f0f0f0; margin: 5px auto; width: 200px; padding: 8px; border-radius: 4px; }
+        #player-list li { background: #f0f0f0; margin: 5px auto; width: 220px; padding: 8px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -97,14 +100,26 @@
         <div id="waiting-room" hidden>
             <hr>
             <h3>Room Code: <span id="display-room-code">----</span></h3>
+            <p id="lobby-status">Waiting for host to start...</p>
             <h4>Players Joined:</h4>
             <ul id="player-list"></ul>
             <br>
             <button type="button" id="start-multiplayer-btn" onclick="startMultiplayerGame()" hidden>Start Game for Everyone</button>
         </div>
+
+        <!-- Shared Flag Board for Multiplayer -->
+        <div id="mp-game-area" hidden>
+            <hr>
+            <img id="mp-flag-image" src="" alt="Guess this flag" width="300">
+            <div class="input-area">
+                <input type="text" id="mp-guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
+                <button type="button" id="mp-submit-btn">Submit</button>
+            </div>
+            <p id="mp-feedback"></p>
+        </div>
     </div>
 </div>
 
-<script src="script.js?v=1000"></script>
+<script src="script.js?v=2000"></script>
 </body>
 </html>
