@@ -8,7 +8,12 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Screen Navigation Functions (Safe against null crashes)
+// Multiplayer state variables
+let currentRoomCode = null;
+let isHost = false;
+let roomPlayers = [];
+
+// 1. Screen Navigation Functions
 function showMainMenu() {
     const main = document.getElementById('main-menu');
     const sp = document.getElementById('singleplayer-screen');
@@ -39,7 +44,77 @@ function showMultiplayer() {
     if (mp) mp.removeAttribute('hidden');
 }
 
-// 2. Fetch JSON Data safely across GitHub Pages paths
+// 2. Multiplayer Lobby Functions
+function createLobby() {
+    const nameInput = document.getElementById('player-name');
+    const playerName = nameInput ? nameInput.value.trim() : '';
+
+    if (!playerName) {
+        alert("Please enter a nickname first!");
+        return;
+    }
+
+    // Generate random 4-character room code
+    currentRoomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+    isHost = true;
+    roomPlayers = [{ name: playerName, isHost: true }];
+
+    updateWaitingRoomUI();
+}
+
+function joinLobby() {
+    const nameInput = document.getElementById('player-name');
+    const codeInput = document.getElementById('room-code-input');
+
+    const playerName = nameInput ? nameInput.value.trim() : '';
+    const roomCode = codeInput ? codeInput.value.trim().toUpperCase() : '';
+
+    if (!playerName) {
+        alert("Please enter a nickname first!");
+        return;
+    }
+    if (!roomCode) {
+        alert("Please enter a room code!");
+        return;
+    }
+
+    currentRoomCode = roomCode;
+    isHost = false;
+    
+    // Add current player to the lobby list
+    roomPlayers = [{ name: "Host Player", isHost: true }, { name: playerName, isHost: false }];
+
+    updateWaitingRoomUI();
+}
+
+function updateWaitingRoomUI() {
+    const waitingRoom = document.getElementById('waiting-room');
+    const roomCodeDisplay = document.getElementById('display-room-code');
+    const playerList = document.getElementById('player-list');
+    const startMpBtn = document.getElementById('start-multiplayer-btn');
+
+    if (waitingRoom) waitingRoom.removeAttribute('hidden');
+    if (roomCodeDisplay) roomCodeDisplay.textContent = currentRoomCode;
+
+    if (playerList) {
+        playerList.innerHTML = roomPlayers.map(p => `<li>${p.name} ${p.isHost ? '👑 (Host)' : ''}</li>`).join('');
+    }
+
+    if (startMpBtn) {
+        if (isHost) {
+            startMpBtn.removeAttribute('hidden');
+        } else {
+            startMpBtn.setAttribute('hidden', 'true');
+        }
+    }
+}
+
+function startMultiplayerGame() {
+    alert("Starting multiplayer game for room " + currentRoomCode + "!");
+    // You can transition to the flag game board here!
+}
+
+// 3. Fetch JSON Data safely across GitHub Pages paths
 async function loadFlags() {
     const paths = [
         'flags.json?v=' + Date.now(),
@@ -58,7 +133,7 @@ async function loadFlags() {
                 return;
             }
         } catch (e) {
-            // Check next potential folder path
+            // Check next potential path
         }
     }
 
@@ -70,7 +145,7 @@ async function loadFlags() {
     }
 }
 
-// 3. Filter flags based on selected region
+// 4. Filter flags based on selected region
 function updateActiveFlags() {
     const selectElement = document.getElementById('region-select');
     const rawValue = selectElement ? selectElement.value.trim() : 'World';
@@ -92,7 +167,7 @@ function updateActiveFlags() {
     }
 }
 
-// 4. Start Game (Reveals the hidden game board)
+// 5. Start Game
 function startGame() {
     if (!allFlags || allFlags.length === 0) {
         alert("Flags are still loading or failed to load. Please refresh the page.");
@@ -145,7 +220,7 @@ function startGame() {
     nextFlag();
 }
 
-// 5. Autocomplete Datalist
+// 6. Autocomplete Datalist
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
@@ -159,7 +234,7 @@ function populateCountryDropdown(flagList) {
     });
 }
 
-// 6. Game Loop Controls
+// 7. Game Loop Controls
 function updateTimer() {
     timeRemaining--;
     const timerEl = document.getElementById('timer');
@@ -245,7 +320,7 @@ function endGame(message) {
     if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 7. Initialization & Event Listeners
+// 8. Initialization & Event Listeners
 function init() {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');

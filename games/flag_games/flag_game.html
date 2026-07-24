@@ -13,8 +13,10 @@
         .settings { margin-bottom: 20px; }
         .input-area { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; margin-top: 15px; }
         #guess-input { padding: 8px; font-size: 16px; width: 220px; }
-        #submit-btn, #start-btn { padding: 8px 16px; font-size: 16px; cursor: pointer; }
+        #submit-btn, #start-btn, #create-room-btn, #join-room-btn, #start-multiplayer-btn { padding: 8px 16px; font-size: 16px; cursor: pointer; }
         #flag-image { max-width: 100%; height: auto; border: 2px solid #ccc; border-radius: 8px; margin-top: 10px; }
+        #player-list { list-style: none; padding: 0; }
+        #player-list li { background: #f0f0f0; margin: 5px auto; width: 200px; padding: 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -86,21 +88,23 @@
         <div class="lobby-controls">
             <input type="text" id="player-name" placeholder="Enter Your Nickname">
             <br><br>
-            <button type="button" id="create-room-btn">Create Lobby</button>
+            <button type="button" id="create-room-btn" onclick="createLobby()">Create Lobby</button>
             <br><br>
             <input type="text" id="room-code-input" placeholder="Room Code (e.g. ABCD)">
-            <button type="button" id="join-room-btn">Join Lobby</button>
+            <button type="button" id="join-room-btn" onclick="joinLobby()">Join Lobby</button>
         </div>
 
         <div id="waiting-room" hidden>
+            <hr>
             <h3>Room Code: <span id="display-room-code">----</span></h3>
             <h4>Players Joined:</h4>
             <ul id="player-list"></ul>
-            <button type="button" id="start-multiplayer-btn" hidden>Start Game for Everyone</button>
+            <br>
+            <button type="button" id="start-multiplayer-btn" onclick="startMultiplayerGame()" hidden>Start Game for Everyone</button>
         </div>
     </div>
 </div>
 
-<script src="script.js?v=999"></script>
+<script src="script.js?v=1000"></script>
 </body>
 </html>
