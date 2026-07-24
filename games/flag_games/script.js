@@ -8,55 +8,72 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Fetch JSON Data
+// 1. Fetch JSON Data safely across GitHub Pages paths
 async function loadFlags() {
-    try {
-        let response = await fetch('data/flags.json?v=2').catch(() => null);
-        if (!response || !response.ok) {
-            response = await fetch('flags.json?v=2');
+    const paths = [
+        'flags.json?v=' + Date.now(),
+        'data/flags.json?v=' + Date.now(),
+        './flags.json?v=' + Date.now(),
+        './data/flags.json?v=' + Date.now()
+    ];
+
+    for (const path of paths) {
+        try {
+            const response = await fetch(path);
+            if (response.ok) {
+                allFlags = await response.json();
+                populateCountryDropdown(allFlags);
+                console.log("✅ Flags loaded successfully from:", path, "Total:", allFlags.length);
+                return;
+            }
+        } catch (e) {
+            // Check next potential folder path
         }
-        
-        allFlags = await response.json();
-        populateCountryDropdown(allFlags);
-        console.log("✅ Flags loaded successfully:", allFlags.length);
-    } catch (error) {
-        console.error("❌ Error loading JSON:", error);
+    }
+
+    console.error("❌ Could not load flags.json from any path.");
+    const feedbackEl = document.getElementById('feedback');
+    if (feedbackEl) {
+        feedbackEl.textContent = "❌ Failed to load flags.json. Make sure flags.json is uploaded to GitHub in the same folder as flag_game.html!";
+        feedbackEl.style.color = "red";
     }
 }
 
 // 2. Filter flags based on selected region
 function updateActiveFlags() {
     const selectElement = document.getElementById('region-select');
-    const rawValue = selectElement ? selectElement.value.toLowerCase().trim() : 'world';
+    const rawValue = selectElement ? selectElement.value.trim() : 'World';
 
-    if (!rawValue || rawValue.includes('world') || rawValue === 'all') {
+    if (!rawValue || rawValue.toLowerCase() === 'world' || rawValue.toLowerCase() === 'all') {
         activeFlags = [...allFlags];
     } else {
+        const target = rawValue.toLowerCase();
         activeFlags = allFlags.filter(flag => {
-            if (!flag.region) return true; 
-            return rawValue.includes(flag.region.toLowerCase());
+            if (!flag.region) return true;
+            const reg = flag.region.toLowerCase();
+            return reg.includes(target) || target.includes(reg);
         });
     }
 
     if (activeFlags.length === 0) {
+        console.warn("No flags matched region filter. Falling back to all flags.");
         activeFlags = [...allFlags];
     }
 }
 
 // 3. Start Game (Reveals the hidden game board)
 function startGame() {
-    if (allFlags.length === 0) {
-        alert("Flags are still loading! Please wait a second and try again.");
+    if (!allFlags || allFlags.length === 0) {
+        alert("Flags are still loading or failed to load. Please refresh the page.");
         return;
     }
 
-    // 🔓 REVEAL THE GAME BOARD
+    // Reveal Game Board
     const gameArea = document.getElementById('game-area');
     if (gameArea) {
         gameArea.removeAttribute('hidden');
     }
 
-    // Change start button text to "Restart Game"
     const startBtn = document.getElementById('start-btn');
     if (startBtn) startBtn.textContent = "Restart Game";
 
@@ -71,20 +88,22 @@ function startGame() {
     gameActive = true;
     clearInterval(timerInterval);
 
-    document.getElementById('score').textContent = score;
-    document.getElementById('feedback').textContent = "";
-    
+    const scoreEl = document.getElementById('score');
+    if (scoreEl) scoreEl.textContent = score;
+
+    const feedbackEl = document.getElementById('feedback');
+    if (feedbackEl) feedbackEl.textContent = "";
+
     const guessInput = document.getElementById('guess-input');
     const submitBtn = document.getElementById('submit-btn');
     if (guessInput) guessInput.disabled = false;
     if (submitBtn) submitBtn.disabled = false;
 
-    // Toggle Mode Displays
     const timerDisp = document.getElementById('timer-display');
     const livesDisp = document.getElementById('lives-display');
     if (timerDisp) timerDisp.style.display = selectedMode === 'timed' ? 'inline' : 'none';
     if (livesDisp) livesDisp.style.display = selectedMode === 'survival' ? 'inline' : 'none';
-    
+
     updateLivesDisplay();
 
     if (selectedMode === 'timed') {
@@ -101,7 +120,7 @@ function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
     datalist.innerHTML = '';
-    
+
     const sortedNames = flagList.map(c => c.name).sort();
     sortedNames.forEach(name => {
         const option = document.createElement('option');
@@ -157,7 +176,9 @@ function checkGuess() {
 
     if (userGuess.toLowerCase() === currentFlag.name.toLowerCase()) {
         score++;
-        document.getElementById('score').textContent = score;
+        const scoreEl = document.getElementById('score');
+        if (scoreEl) scoreEl.textContent = score;
+
         const feedbackEl = document.getElementById('feedback');
         if (feedbackEl) {
             feedbackEl.textContent = "Correct! 🎉";
@@ -194,8 +215,8 @@ function endGame(message) {
     if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 6. Bind Event Listeners
-window.addEventListener('DOMContentLoaded', () => {
+// 6. Safe Initialization (Guarantees listeners attach even if page is already loaded)
+function init() {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
     const guessInput = document.getElementById('guess-input');
@@ -210,4 +231,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     loadFlags();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}

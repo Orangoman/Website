@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Flag!</title>
+</head>
+<body>
+
 <div id="game-container">
     <h1>Guess the Flag!</h1>
 
@@ -11,8 +20,8 @@
                 <option value="North America">North America</option>
                 <option value="South America">South America</option>
                 <option value="Africa">Africa</option>
-                <option value="Oceana">Oceana</option>
-                <option value="Territory">Territories</option>
+                <option value="Oceania">Oceania</option>
+                <option value="Territories">Territories</option>
             </select>
         </label>
 
@@ -24,27 +33,33 @@
             </select>
         </label>
         
-        <button id="start-btn">Start Game</button>
+        <button type="button" id="start-btn">Start Game</button>
     </div>
 
     <hr>
+
     <!-- Score HUD -->
-<div id="hud">
-    <p>Score: <span id="score">0</span></p>
-    <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
-    <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
-</div>
-
-<!-- GAME AREA: 'hidden' keeps this invisible until Start Game is clicked -->
-<div id="game-area" hidden>
-    <img id="flag-image" src="" alt="Guess this flag" width="300">
-    
-    <div class="input-area">
-        <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
-        <br>
-        <datalist id="country-options"></datalist>
-        <button id="submit-btn">Submit</button>
+    <div id="hud">
+        <p>Score: <span id="score">0</span></p>
+        <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
+        <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
     </div>
+
+    <!-- GAME AREA: 'hidden' keeps this invisible until Start Game is clicked -->
+    <div id="game-area" hidden>
+        <img id="flag-image" src="" alt="Guess this flag" width="300">
+        
+        <div class="input-area">
+            <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
+            <br>
+            <datalist id="country-options"></datalist>
+            <button type="button" id="submit-btn">Submit</button>
+        </div>
+    </div>
+
+    <p id="feedback"></p>
 </div>
 
-<p id="feedback"></p>
+<script src="script.js?v=5"></script>
+</body>
+</html>
