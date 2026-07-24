@@ -238,3 +238,44 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+// Screen Navigation Functions
+function showMainMenu() {
+    document.getElementById('main-menu').removeAttribute('hidden');
+    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
+    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
+}
+
+function showSinglePlayer() {
+    document.getElementById('main-menu').setAttribute('hidden', 'true');
+    document.getElementById('singleplayer-screen').removeAttribute('hidden');
+}
+
+function showMultiplayer() {
+    document.getElementById('main-menu').setAttribute('hidden', 'true');
+    document.getElementById('multiplayer-screen').removeAttribute('hidden');
+}
+
+// Bind Navigation Events in init()
+function initNavigation() {
+    const spBtn = document.getElementById('choose-sp-btn');
+    const mpBtn = document.getElementById('choose-mp-btn');
+    const backBtns = document.querySelectorAll('.back-btn');
+
+    if (spBtn) spBtn.addEventListener('click', showSinglePlayer);
+    if (mpBtn) mpBtn.addEventListener('click', showMultiplayer);
+    
+    backBtns.forEach(btn => {
+        btn.addEventListener('click', showMainMenu);
+    });
+}
+
+// Add initNavigation() inside your existing DOM loading block
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initNavigation();
+        init(); // Calls your existing start-up logic
+    });
+} else {
+    initNavigation();
+    init();
+}

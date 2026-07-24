@@ -1,114 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Flag!</title>
-
-    <style>
-        /* Center container and stack elements vertically */
-        #game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            font-family: sans-serif;
-        }
-
-        /* Stack flag image and input area vertically */
-        #game-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px; /* Adds space between flag and text box */
-            margin-top: 15px;
-        }
-
-        /* Prevent flag from overflowing on small screens */
-        #flag-image {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-        }
-
-        /* Keep input box and submit button neat */
-        .input-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        #guess-input {
-            padding: 8px 12px;
-            font-size: 16px;
-            width: 250px;
-            text-align: center;
-        }
-
-        #submit-btn, #start-btn {
-            padding: 8px 16px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
 <div id="game-container">
     <h1>Guess the Flag!</h1>
 
-    <!-- Category & Mode Settings -->
-    <div class="settings">
-        <label>Region:
-            <select id="region-select">
-                <option value="World">World</option>
-                <option value="Europe">Europe</option>
-                <option value="Asia">Asia</option>
-                <option value="North America">North America</option>
-                <option value="South America">South America</option>
-                <option value="Africa">Africa</option>
-                <option value="Oceania">Oceania</option>
-                <option value="Territories">Territories</option>
-            </select>
-        </label>
-
-        <label>Mode:
-            <select id="mode-select">
-                <option value="classic">Classic (Endless)</option>
-                <option value="timed">Timed (60s)</option>
-                <option value="survival">Survival (3 Lives)</option>
-            </select>
-        </label>
-        
-        <button type="button" id="start-btn">Start Game</button>
+    <!-- 1. MAIN MENU (Visible by default) -->
+    <div id="main-menu">
+        <h2>Choose Game Mode</h2>
+        <button type="button" id="choose-sp-btn" class="menu-btn">🎮 Single Player</button>
+        <button type="button" id="choose-mp-btn" class="menu-btn">🌐 Multiplayer</button>
     </div>
 
-    <hr>
+    <!-- 2. SINGLE PLAYER SCREEN -->
+    <div id="singleplayer-screen" hidden>
+        <button type="button" class="back-btn">← Back to Menu</button>
+        
+        <div class="settings">
+            <label>Region:
+                <select id="region-select">
+                    <option value="World">World</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Asia">Asia</option>
+                    <option value="North America">North America</option>
+                    <option value="South America">South America</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Oceania">Oceania</option>
+                    <option value="Territories">Territories</option>
+                </select>
+            </label>
 
-    <!-- Score HUD -->
-    <div id="hud">
-        <p>Score: <span id="score">0</span></p>
-        <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
-        <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
+            <label>Mode:
+                <select id="mode-select">
+                    <option value="classic">Classic (Endless)</option>
+                    <option value="timed">Timed (60s)</option>
+                    <option value="survival">Survival (3 Lives)</option>
+                </select>
+            </label>
+            
+            <button type="button" id="start-btn">Start Game</button>
+        </div>
+
+        <hr>
+
+        <div id="hud">
+            <p>Score: <span id="score">0</span></p>
+            <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
+            <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
+        </div>
+
+        <div id="game-area" hidden>
+            <img id="flag-image" src="" alt="Guess this flag" width="300">
+            <div class="input-area">
+                <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
+                <button type="button" id="submit-btn">Submit</button>
+                <datalist id="country-options"></datalist>
+            </div>
+        </div>
+
+        <p id="feedback"></p>
     </div>
 
-    <!-- GAME AREA: 'hidden' keeps this invisible until Start Game is clicked -->
-    <div id="game-area" hidden>
-        <img id="flag-image" src="" alt="Guess this flag" width="300">
+    <!-- 3. MULTIPLAYER SCREEN -->
+    <div id="multiplayer-screen" hidden>
+        <button type="button" class="back-btn">← Back to Menu</button>
         
-        <div class="input-area">
-            <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
-            <datalist id="country-options"></datalist>
-            <button type="button" id="submit-btn">Submit</button>
+        <h2>Multiplayer Lobby</h2>
+        <div class="lobby-controls">
+            <input type="text" id="player-name" placeholder="Enter Your Nickname">
+            <br><br>
+            <button type="button" id="create-room-btn">Create Lobby</button>
+            <br><br>
+            <input type="text" id="room-code-input" placeholder="Room Code (e.g. ABCD)">
+            <button type="button" id="join-room-btn">Join Lobby</button>
+        </div>
+
+        <div id="waiting-room" hidden>
+            <h3>Room Code: <span id="display-room-code">----</span></h3>
+            <h4>Players Joined:</h4>
+            <ul id="player-list"></ul>
+            <button type="button" id="start-multiplayer-btn" hidden>Start Game for Everyone</button>
         </div>
     </div>
-
-    <p id="feedback"></p>
 </div>
-
-<script src="script.js?v=5"></script>
-</body>
-</html>
