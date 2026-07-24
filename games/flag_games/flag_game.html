@@ -28,29 +28,23 @@
     </div>
 
     <hr>
-
-    <!-- Game Stats HUD -->
-    <div class="hud">
-        <p>Score: <span id="score">0</span></p>
-        <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
-        <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
-    </div>
-
-    <div class="flag-display">
-        <img id="flag-image" src="" alt="Guess this flag" width="300">
-    </div>
-
-    <div class="input-area">
-    <p>
-        <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
-    </p>
-
-    <datalist id="country-options"></datalist>
-
-    <p>
-        <button id="submit-btn">Submit</button>
-    </p>
-    </div>
-
-    <p id="feedback"></p>
+    <!-- Score HUD -->
+<div id="hud">
+    <p>Score: <span id="score">0</span></p>
+    <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
+    <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
 </div>
+
+<!-- GAME AREA: 'hidden' keeps this invisible until Start Game is clicked -->
+<div id="game-area" hidden>
+    <img id="flag-image" src="" alt="Guess this flag" width="300">
+    
+    <div class="input-area">
+        <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
+        <br>
+        <datalist id="country-options"></datalist>
+        <button id="submit-btn">Submit</button>
+    </div>
+</div>
+
+<p id="feedback"></p>

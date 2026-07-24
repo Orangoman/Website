@@ -8,7 +8,7 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Fetch JSON Data & Auto-Start
+// 1. Fetch JSON Data
 async function loadFlags() {
     try {
         let response = await fetch('data/flags.json?v=2').catch(() => null);
@@ -17,24 +17,18 @@ async function loadFlags() {
         }
         
         allFlags = await response.json();
-        console.log("✅ Flags loaded:", allFlags.length);
-        
         populateCountryDropdown(allFlags);
-        
-        // 🚀 AUTO-START THE GAME ON LOAD
-        startGame();
-
+        console.log("✅ Flags loaded successfully:", allFlags.length);
     } catch (error) {
         console.error("❌ Error loading JSON:", error);
     }
 }
 
-// 2. Filter flags based on dropdown (Defaults to 'world' / all flags)
+// 2. Filter flags based on selected region
 function updateActiveFlags() {
     const selectElement = document.getElementById('region-select');
     const rawValue = selectElement ? selectElement.value.toLowerCase().trim() : 'world';
 
-    // If 'world', empty, or 'all', keep every flag
     if (!rawValue || rawValue.includes('world') || rawValue === 'all') {
         activeFlags = [...allFlags];
     } else {
@@ -44,15 +38,27 @@ function updateActiveFlags() {
         });
     }
 
-    // Fallback safety net
     if (activeFlags.length === 0) {
         activeFlags = [...allFlags];
     }
 }
 
-// 3. Start / Reset Game
+// 3. Start Game (Reveals the hidden game board)
 function startGame() {
-    if (allFlags.length === 0) return;
+    if (allFlags.length === 0) {
+        alert("Flags are still loading! Please wait a second and try again.");
+        return;
+    }
+
+    // 🔓 REVEAL THE GAME BOARD
+    const gameArea = document.getElementById('game-area');
+    if (gameArea) {
+        gameArea.removeAttribute('hidden');
+    }
+
+    // Change start button text to "Restart Game"
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) startBtn.textContent = "Restart Game";
 
     const modeSelect = document.getElementById('mode-select');
     const selectedMode = modeSelect ? modeSelect.value : 'classic';
@@ -65,20 +71,15 @@ function startGame() {
     gameActive = true;
     clearInterval(timerInterval);
 
-    // Update Score UI
-    const scoreEl = document.getElementById('score');
-    if (scoreEl) scoreEl.textContent = score;
-
-    const feedbackEl = document.getElementById('feedback');
-    if (feedbackEl) feedbackEl.textContent = "";
-
-    // Enable input and submit elements
+    document.getElementById('score').textContent = score;
+    document.getElementById('feedback').textContent = "";
+    
     const guessInput = document.getElementById('guess-input');
     const submitBtn = document.getElementById('submit-btn');
     if (guessInput) guessInput.disabled = false;
     if (submitBtn) submitBtn.disabled = false;
 
-    // Set up Mode HUDs
+    // Toggle Mode Displays
     const timerDisp = document.getElementById('timer-display');
     const livesDisp = document.getElementById('lives-display');
     if (timerDisp) timerDisp.style.display = selectedMode === 'timed' ? 'inline' : 'none';
@@ -92,11 +93,10 @@ function startGame() {
         timerInterval = setInterval(updateTimer, 1000);
     }
 
-    // Pick and display the first flag immediately!
     nextFlag();
 }
 
-// 4. Populate autocomplete dropdown
+// 4. Autocomplete Datalist
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
@@ -157,9 +157,7 @@ function checkGuess() {
 
     if (userGuess.toLowerCase() === currentFlag.name.toLowerCase()) {
         score++;
-        const scoreEl = document.getElementById('score');
-        if (scoreEl) scoreEl.textContent = score;
-
+        document.getElementById('score').textContent = score;
         const feedbackEl = document.getElementById('feedback');
         if (feedbackEl) {
             feedbackEl.textContent = "Correct! 🎉";
@@ -196,18 +194,14 @@ function endGame(message) {
     if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 6. Start loading as soon as DOM is ready
+// 6. Bind Event Listeners
 window.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
     const guessInput = document.getElementById('guess-input');
-    const regionSelect = document.getElementById('region-select');
-    const modeSelect = document.getElementById('mode-select');
 
     if (startBtn) startBtn.addEventListener('click', startGame);
     if (submitBtn) submitBtn.addEventListener('click', checkGuess);
-    if (regionSelect) regionSelect.addEventListener('change', startGame);
-    if (modeSelect) modeSelect.addEventListener('change', startGame);
 
     if (guessInput) {
         guessInput.addEventListener('keypress', (e) => {
@@ -215,6 +209,5 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Load JSON and immediately start game
     loadFlags();
 });
