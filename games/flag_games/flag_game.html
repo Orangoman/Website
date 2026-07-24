@@ -1,40 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orangoman</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="game-container">
-        <h1>Guess the Flag!</h1>
-        <p>Score: <span id="score">0</span></p>
+<div id="game-container">
+    <h1>Guess the Flag!</h1>
 
-        <div class="flag-display">
-            <img id="flag-image" src="" alt="Guess this flag" width="300">
-        </div>
+    <!-- Category & Mode Settings -->
+    <div class="settings">
+        <label>Region:
+            <select id="region-select">
+                <option value="World">World (All)</option>
+                <option value="Europe">Europe</option>
+                <option value="Asia">Asia</option>
+                <option value="Americas">Americas</option>
+                <option value="Africa">Africa</option>
+            </select>
+        </label>
 
-        <div class="input-area">
-            <!-- 1. list="country-options" links this input box to the datalist below -->
-            <input 
-              type="text" 
-              id="guess-input" 
-              list="country-options" 
-              placeholder="Start typing a country..." 
-              autofocus 
-              autocomplete="off"
-            >
-
-            <!-- 2. The browser automatically turns this into a dropdown menu -->
-            <datalist id="country-options"></datalist>
-
-            <button id="submit-btn">Submit</button>
-        </div>
-
-        <p id="feedback"></p>
+        <label>Mode:
+            <select id="mode-select">
+                <option value="classic">Classic (Endless)</option>
+                <option value="timed">Timed (60s)</option>
+                <option value="survival">Survival (3 Lives)</option>
+            </select>
+        </label>
+        
+        <button id="start-btn">Start Game</button>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <hr>
+
+    <!-- Game Stats HUD -->
+    <div class="hud">
+        <p>Score: <span id="score">0</span></p>
+        <p id="timer-display" style="display:none;">Time: <span id="timer">60</span>s</p>
+        <p id="lives-display" style="display:none;">Lives: <span id="lives">❤️❤️❤️</span></p>
+    </div>
+
+    <div class="flag-display">
+        <img id="flag-image" src="" alt="Guess this flag" width="300">
+    </div>
+
+    <div class="input-area">
+    <p>
+        <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
+    </p>
+
+    <datalist id="country-options"></datalist>
+
+    <p>
+        <button id="submit-btn">Submit</button>
+    </p>
+    </div>
+
+    <p id="feedback"></p>
+</div>

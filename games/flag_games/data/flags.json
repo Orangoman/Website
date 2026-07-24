@@ -1,1018 +1,1272 @@
 [
   {
     "name": "Afghanistan",
-    "image": "data/images/af.png"
+    "image": "images/af.png",
+    "region": "Asia"
   },
   {
     "name": "Åland Islands",
-    "image": "data/images/ax.png"
+    "image": "images/ax.png",
+    "region": "Territory"
   },
   {
     "name": "Albania",
-    "image": "data/images/al.png"
+    "image": "images/al.png",
+    "region": "Europe"
   },
   {
     "name": "Algeria",
-    "image": "data/images/dz.png"
+    "image": "images/dz.png",
+    "region": "Africa"
   },
   {
     "name": "American Samoa",
-    "image": "data/images/as.png"
+    "image": "images/as.png",
+    "region": "Territory"
   },
   {
     "name": "Andorra",
-    "image": "data/images/ad.png"
+    "image": "images/ad.png",
+    "region": "Europe"
   },
   {
     "name": "Angola",
-    "image": "data/images/ao.png"
+    "image": "images/ao.png",
+    "region": "Africa"
   },
   {
     "name": "Anguilla",
-    "image": "data/images/ai.png"
+    "image": "images/ai.png",
+    "region": "Territory"
   },
   {
     "name": "Antarctica",
-    "image": "data/images/aq.png"
+    "image": "images/aq.png",
+    "region": "Territory"
   },
   {
     "name": "Antigua and Barbuda",
-    "image": "data/images/ag.png"
+    "image": "images/ag.png",
+    "region": "North America"
   },
   {
     "name": "Argentina",
-    "image": "data/images/ar.png"
+    "image": "images/ar.png",
+    "region": "South America"
   },
   {
     "name": "Armenia",
-    "image": "data/images/am.png"
+    "image": "images/am.png",
+    "region": "Asia"
   },
   {
     "name": "Aruba",
-    "image": "data/images/aw.png"
+    "image": "images/aw.png",
+    "region": "Territory"
   },
   {
     "name": "Australia",
-    "image": "data/images/au.png"
+    "image": "images/au.png",
+    "region": "Oceania"
   },
   {
     "name": "Austria",
-    "image": "data/images/at.png"
+    "image": "images/at.png",
+    "region": "Europe"
   },
   {
     "name": "Azerbaijan",
-    "image": "data/images/az.png"
+    "image": "images/az.png",
+    "region": "Asia"
   },
   {
     "name": "Bahamas",
-    "image": "data/images/bs.png"
+    "image": "images/bs.png",
+    "region": "North America"
   },
   {
     "name": "Bahrain",
-    "image": "data/images/bh.png"
+    "image": "images/bh.png",
+    "region": "Asia"
   },
   {
     "name": "Bangladesh",
-    "image": "data/images/bd.png"
+    "image": "images/bd.png",
+    "region": "Asia"
   },
   {
     "name": "Barbados",
-    "image": "data/images/bb.png"
+    "image": "images/bb.png",
+    "region": "North America"
   },
   {
     "name": "Belarus",
-    "image": "data/images/by.png"
+    "image": "images/by.png",
+    "region": "Europe"
   },
   {
     "name": "Belgium",
-    "image": "data/images/be.png"
+    "image": "images/be.png",
+    "region": "Europe"
   },
   {
     "name": "Belize",
-    "image": "data/images/bz.png"
+    "image": "images/bz.png",
+    "region": "North America"
   },
   {
     "name": "Benin",
-    "image": "data/images/bj.png"
+    "image": "images/bj.png",
+    "region": "Africa"
   },
   {
     "name": "Bermuda",
-    "image": "data/images/bm.png"
+    "image": "images/bm.png",
+    "region": "Territory"
   },
   {
     "name": "Bhutan",
-    "image": "data/images/bt.png"
+    "image": "images/bt.png",
+    "region": "Asia"
   },
   {
     "name": "Bolivia",
-    "image": "data/images/bo.png"
+    "image": "images/bo.png",
+    "region": "South America"
   },
   {
     "name": "Bosnia and Herzegovina",
-    "image": "data/images/ba.png"
+    "image": "images/ba.png",
+    "region": "Europe"
   },
   {
     "name": "Botswana",
-    "image": "data/images/bw.png"
+    "image": "images/bw.png",
+    "region": "Africa"
   },
   {
     "name": "Bouvet Island",
-    "image": "data/images/bv.png"
+    "image": "images/bv.png",
+    "region": "Territory"
   },
   {
     "name": "Brazil",
-    "image": "data/images/br.png"
+    "image": "images/br.png",
+    "region": "South America"
   },
   {
     "name": "British Indian Ocean Territory",
-    "image": "data/images/io.png"
+    "image": "images/io.png",
+    "region": "Territory"
   },
   {
     "name": "Brunei",
-    "image": "data/images/bn.png"
+    "image": "images/bn.png",
+    "region": "Asia"
   },
   {
     "name": "Bulgaria",
-    "image": "data/images/bg.png"
+    "image": "images/bg.png",
+    "region": "Europe"
   },
   {
     "name": "Burkina Faso",
-    "image": "data/images/bf.png"
+    "image": "images/bf.png",
+    "region": "Africa"
   },
   {
     "name": "Burundi",
-    "image": "data/images/bi.png"
+    "image": "images/bi.png",
+    "region": "Africa"
   },
   {
     "name": "Cambodia",
-    "image": "data/images/kh.png"
+    "image": "images/kh.png",
+    "region": "Asia"
   },
   {
     "name": "Cameroon",
-    "image": "data/images/cm.png"
+    "image": "images/cm.png",
+    "region": "Africa"
   },
   {
     "name": "Canada",
-    "image": "data/images/ca.png"
+    "image": "images/ca.png",
+    "region": "North America"
   },
   {
     "name": "Cape Verde",
-    "image": "data/images/cv.png"
+    "image": "images/cv.png",
+    "region": "Africa"
   },
   {
     "name": "Caribbean Netherlands",
-    "image": "data/images/bq.png"
+    "image": "images/bq.png",
+    "region": "Territory"
   },
   {
     "name": "Cayman Islands",
-    "image": "data/images/ky.png"
+    "image": "images/ky.png",
+    "region": "Territory"
   },
   {
     "name": "Central African Republic",
-    "image": "data/images/cf.png"
+    "image": "images/cf.png",
+    "region": "Africa"
   },
   {
     "name": "Chad",
-    "image": "data/images/td.png"
+    "image": "images/td.png",
+    "region": "Africa"
   },
   {
     "name": "Chile",
-    "image": "data/images/cl.png"
+    "image": "images/cl.png",
+    "region": "South America"
   },
   {
     "name": "China",
-    "image": "data/images/cn.png"
+    "image": "images/cn.png",
+    "region": "Asia"
   },
   {
     "name": "Christmas Island",
-    "image": "data/images/cx.png"
+    "image": "images/cx.png",
+    "region": "Territory"
   },
   {
     "name": "Cocos Islands",
-    "image": "data/images/cc.png"
+    "image": "images/cc.png",
+    "region": "Territory"
   },
   {
     "name": "Colombia",
-    "image": "data/images/co.png"
+    "image": "images/co.png",
+    "region": "South America"
   },
   {
     "name": "Comoros",
-    "image": "data/images/km.png"
+    "image": "images/km.png",
+    "region": "Africa"
   },
   {
     "name": "Republic of the Congo",
-    "image": "data/images/cg.png"
+    "image": "images/cg.png",
+    "region": "Africa"
   },
   {
     "name": "DR Congo",
-    "image": "data/images/cd.png"
+    "image": "images/cd.png",
+    "region": "Africa"
   },
   {
     "name": "Cook Islands",
-    "image": "data/images/ck.png"
+    "image": "images/ck.png",
+    "region": "Territory"
   },
   {
     "name": "Costa Rica",
-    "image": "data/images/cr.png"
+    "image": "images/cr.png",
+    "region": "North America"
   },
   {
     "name": "Côte d'Ivoire",
-    "image": "data/images/ci.png"
+    "image": "images/ci.png",
+    "region": "Africa"
   },
   {
     "name": "Croatia",
-    "image": "data/images/hr.png"
+    "image": "images/hr.png",
+    "region": "Europe"
   },
   {
     "name": "Cuba",
-    "image": "data/images/cu.png"
+    "image": "images/cu.png",
+    "region": "North America"
   },
   {
     "name": "Curaçao",
-    "image": "data/images/cw.png"
+    "image": "images/cw.png",
+    "region": "Territory"
   },
   {
     "name": "Cyprus",
-    "image": "data/images/cy.png"
+    "image": "images/cy.png",
+    "region": "Europe"
   },
   {
     "name": "Czechia",
-    "image": "data/images/cz.png"
+    "image": "images/cz.png",
+    "region": "Europe"
   },
   {
     "name": "Denmark",
-    "image": "data/images/dk.png"
+    "image": "images/dk.png",
+    "region": "Europe"
   },
   {
     "name": "Djibouti",
-    "image": "data/images/dj.png"
+    "image": "images/dj.png",
+    "region": "Africa"
   },
   {
     "name": "Dominica",
-    "image": "data/images/dm.png"
+    "image": "images/dm.png",
+    "region": "North America"
   },
   {
     "name": "Dominican Republic",
-    "image": "data/images/do.png"
+    "image": "images/do.png",
+    "region": "North America"
   },
   {
     "name": "Ecuador",
-    "image": "data/images/ec.png"
+    "image": "images/ec.png",
+    "region": "South America"
   },
   {
     "name": "Egypt",
-    "image": "data/images/eg.png"
+    "image": "images/eg.png",
+    "region": "Africa"
   },
   {
     "name": "El Salvador",
-    "image": "data/images/sv.png"
+    "image": "images/sv.png",
+    "region": "North America"
   },
   {
     "name": "England",
-    "image": "data/images/gb-eng.png"
+    "image": "images/gb-eng.png",
+    "region": "Territory"
   },
   {
     "name": "Equatorial Guinea",
-    "image": "data/images/gq.png"
+    "image": "images/gq.png",
+    "region": "Africa"
   },
   {
     "name": "Eritrea",
-    "image": "data/images/er.png"
+    "image": "images/er.png",
+    "region": "Africa"
   },
   {
     "name": "Estonia",
-    "image": "data/images/ee.png"
+    "image": "images/ee.png",
+    "region": "Europe"
   },
   {
     "name": "Eswatini",
-    "image": "data/images/sz.png"
+    "image": "images/sz.png",
+    "region": "Africa"
   },
   {
     "name": "Ethiopia",
-    "image": "data/images/et.png"
+    "image": "images/et.png",
+    "region": "Africa"
   },
   {
     "name": "Falkland Islands",
-    "image": "data/images/fk.png"
+    "image": "images/fk.png",
+    "region": "Territory"
   },
   {
     "name": "Faroe Islands",
-    "image": "data/images/fo.png"
+    "image": "images/fo.png",
+    "region": "Territory"
   },
   {
     "name": "Fiji",
-    "image": "data/images/fj.png"
+    "image": "images/fj.png",
+    "region": "Oceania"
   },
   {
     "name": "Finland",
-    "image": "data/images/fi.png"
+    "image": "images/fi.png",
+    "region": "Europe"
   },
   {
     "name": "France",
-    "image": "data/images/fr.png"
+    "image": "images/fr.png",
+    "region": "Europe"
   },
   {
     "name": "French Guiana",
-    "image": "data/images/gf.png"
+    "image": "images/gf.png",
+    "region": "Territory"
   },
   {
     "name": "French Polynesia",
-    "image": "data/images/pf.png"
+    "image": "images/pf.png",
+    "region": "Territory"
   },
   {
     "name": "French Southern and Antarctic Lands",
-    "image": "data/images/tf.png"
+    "image": "images/tf.png",
+    "region": "Territory"
   },
   {
     "name": "Gabon",
-    "image": "data/images/ga.png"
+    "image": "images/ga.png",
+    "region": "Africa"
   },
   {
     "name": "Gambia",
-    "image": "data/images/gm.png"
+    "image": "images/gm.png",
+    "region": "Africa"
   },
   {
     "name": "Georgia",
-    "image": "data/images/ge.png"
+    "image": "images/ge.png",
+    "region": "Asia"
   },
   {
     "name": "Germany",
-    "image": "data/images/de.png"
+    "image": "images/de.png",
+    "region": "Europe"
   },
   {
     "name": "Ghana",
-    "image": "data/images/gh.png"
+    "image": "images/gh.png",
+    "region": "Africa"
   },
   {
     "name": "Gibraltar",
-    "image": "data/images/gi.png"
+    "image": "images/gi.png",
+    "region": "Territory"
   },
   {
     "name": "Greece",
-    "image": "data/images/gr.png"
+    "image": "images/gr.png",
+    "region": "Europe"
   },
   {
     "name": "Greenland",
-    "image": "data/images/gl.png"
+    "image": "images/gl.png",
+    "region": "Territory"
   },
   {
     "name": "Grenada",
-    "image": "data/images/gd.png"
+    "image": "images/gd.png",
+    "region": "North America"
   },
   {
     "name": "Guadeloupe",
-    "image": "data/images/gp.png"
+    "image": "images/gp.png",
+    "region": "Territory"
   },
   {
     "name": "Guam",
-    "image": "data/images/gu.png"
+    "image": "images/gu.png",
+    "region": "Territory"
   },
   {
     "name": "Guatemala",
-    "image": "data/images/gt.png"
+    "image": "images/gt.png",
+    "region": "North America"
   },
   {
     "name": "Guernsey",
-    "image": "data/images/gg.png"
+    "image": "images/gg.png",
+    "region": "Territory"
   },
   {
     "name": "Guinea",
-    "image": "data/images/gn.png"
+    "image": "images/gn.png",
+    "region": "Africa"
   },
   {
     "name": "Guinea-Bissau",
-    "image": "data/images/gw.png"
+    "image": "images/gw.png",
+    "region": "Africa"
   },
   {
     "name": "Guyana",
-    "image": "data/images/gy.png"
+    "image": "images/gy.png",
+    "region": "South America"
   },
   {
     "name": "Haiti",
-    "image": "data/images/ht.png"
+    "image": "images/ht.png",
+    "region": "North America"
   },
   {
     "name": "Heard Island and McDonald Islands",
-    "image": "data/images/hm.png"
+    "image": "images/hm.png",
+    "region": "Territory"
   },
   {
     "name": "Honduras",
-    "image": "data/images/hn.png"
+    "image": "images/hn.png",
+    "region": "North America"
   },
   {
     "name": "Hong Kong",
-    "image": "data/images/hk.png"
+    "image": "images/hk.png",
+    "region": "Territory"
   },
   {
     "name": "Hungary",
-    "image": "data/images/hu.png"
+    "image": "images/hu.png",
+    "region": "Europe"
   },
   {
     "name": "Iceland",
-    "image": "data/images/is.png"
+    "image": "images/is.png",
+    "region": "Europe"
   },
   {
     "name": "India",
-    "image": "data/images/in.png"
+    "image": "images/in.png",
+    "region": "Asia"
   },
   {
     "name": "Indonesia",
-    "image": "data/images/id.png"
+    "image": "images/id.png",
+    "region": "Asia"
   },
   {
     "name": "Iran",
-    "image": "data/images/ir.png"
+    "image": "images/ir.png",
+    "region": "Asia"
   },
   {
     "name": "Iraq",
-    "image": "data/images/iq.png"
+    "image": "images/iq.png",
+    "region": "Asia"
   },
   {
     "name": "Ireland",
-    "image": "data/images/ie.png"
+    "image": "images/ie.png",
+    "region": "Europe"
   },
   {
     "name": "Isle of Man",
-    "image": "data/images/im.png"
+    "image": "images/im.png",
+    "region": "Territory"
   },
   {
     "name": "Israel",
-    "image": "data/images/il.png"
+    "image": "images/il.png",
+    "region": "Asia"
   },
   {
     "name": "Italy",
-    "image": "data/images/it.png"
+    "image": "images/it.png",
+    "region": "Europe"
   },
   {
     "name": "Jamaica",
-    "image": "data/images/jm.png"
+    "image": "images/jm.png",
+    "region": "North America"
   },
   {
     "name": "Japan",
-    "image": "data/images/jp.png"
+    "image": "images/jp.png",
+    "region": "Asia"
   },
   {
     "name": "Jersey",
-    "image": "data/images/je.png"
+    "image": "images/je.png",
+    "region": "Territory"
   },
   {
     "name": "Jordan",
-    "image": "data/images/jo.png"
+    "image": "images/jo.png",
+    "region": "Asia"
   },
   {
     "name": "Kazakhstan",
-    "image": "data/images/kz.png"
+    "image": "images/kz.png",
+    "region": "Asia"
   },
   {
     "name": "Kenya",
-    "image": "data/images/ke.png"
+    "image": "images/ke.png",
+    "region": "Africa"
   },
   {
     "name": "Kiribati",
-    "image": "data/images/ki.png"
+    "image": "images/ki.png",
+    "region": "Oceania"
   },
   {
     "name": "North Korea",
-    "image": "data/images/kp.png"
+    "image": "images/kp.png",
+    "region": "Asia"
   },
   {
     "name": "South Korea",
-    "image": "data/images/kr.png"
+    "image": "images/kr.png",
+    "region": "Asia"
   },
   {
     "name": "Kosovo",
-    "image": "data/images/xk.png"
+    "image": "images/xk.png",
+    "region": "Territory"
   },
   {
     "name": "Kuwait",
-    "image": "data/images/kw.png"
+    "image": "images/kw.png",
+    "region": "Asia"
   },
   {
     "name": "Kyrgyzstan",
-    "image": "data/images/kg.png"
+    "image": "images/kg.png",
+    "region": "Asia"
   },
   {
     "name": "Laos",
-    "image": "data/images/la.png"
+    "image": "images/la.png",
+    "region": "Asia"
   },
   {
     "name": "Latvia",
-    "image": "data/images/lv.png"
+    "image": "images/lv.png",
+    "region": "Europe"
   },
   {
     "name": "Lebanon",
-    "image": "data/images/lb.png"
+    "image": "images/lb.png",
+    "region": "Asia"
   },
   {
     "name": "Lesotho",
-    "image": "data/images/ls.png"
+    "image": "images/ls.png",
+    "region": "Africa"
   },
   {
     "name": "Liberia",
-    "image": "data/images/lr.png"
+    "image": "images/lr.png",
+    "region": "Africa"
   },
   {
     "name": "Libya",
-    "image": "data/images/ly.png"
+    "image": "images/ly.png",
+    "region": "Africa"
   },
   {
     "name": "Liechtenstein",
-    "image": "data/images/li.png"
+    "image": "images/li.png",
+    "region": "Europe"
   },
   {
     "name": "Lithuania",
-    "image": "data/images/lt.png"
+    "image": "images/lt.png",
+    "region": "Europe"
   },
   {
     "name": "Luxembourg",
-    "image": "data/images/lu.png"
+    "image": "images/lu.png",
+    "region": "Europe"
   },
   {
     "name": "Macau",
-    "image": "data/images/mo.png"
+    "image": "images/mo.png",
+    "region": "Territory"
   },
   {
     "name": "Madagascar",
-    "image": "data/images/mg.png"
+    "image": "images/mg.png",
+    "region": "Africa"
   },
   {
     "name": "Malawi",
-    "image": "data/images/mw.png"
+    "image": "images/mw.png",
+    "region": "Africa"
   },
   {
     "name": "Malaysia",
-    "image": "data/images/my.png"
+    "image": "images/my.png",
+    "region": "Asia"
   },
   {
     "name": "Maldives",
-    "image": "data/images/mv.png"
+    "image": "images/mv.png",
+    "region": "Asia"
   },
   {
     "name": "Mali",
-    "image": "data/images/ml.png"
+    "image": "images/ml.png",
+    "region": "Africa"
   },
   {
     "name": "Malta",
-    "image": "data/images/mt.png"
+    "image": "images/mt.png",
+    "region": "Europe"
   },
   {
     "name": "Marshall Islands",
-    "image": "data/images/mh.png"
+    "image": "images/mh.png",
+    "region": "Oceania"
   },
   {
     "name": "Martinique",
-    "image": "data/images/mq.png"
+    "image": "images/mq.png",
+    "region": "Territory"
   },
   {
     "name": "Mauritania",
-    "image": "data/images/mr.png"
+    "image": "images/mr.png",
+    "region": "Africa"
   },
   {
     "name": "Mauritius",
-    "image": "data/images/mu.png"
+    "image": "images/mu.png",
+    "region": "Africa"
   },
   {
     "name": "Mayotte",
-    "image": "data/images/yt.png"
+    "image": "images/yt.png",
+    "region": "Territory"
   },
   {
     "name": "Mexico",
-    "image": "data/images/mx.png"
+    "image": "images/mx.png",
+    "region": "North America"
   },
   {
     "name": "Micronesia",
-    "image": "data/images/fm.png"
+    "image": "images/fm.png",
+    "region": "Oceania"
   },
   {
     "name": "Moldova",
-    "image": "data/images/md.png"
+    "image": "images/md.png",
+    "region": "Europe"
   },
   {
     "name": "Monaco",
-    "image": "data/images/mc.png"
+    "image": "images/mc.png",
+    "region": "Europe"
   },
   {
     "name": "Mongolia",
-    "image": "data/images/mn.png"
+    "image": "images/mn.png",
+    "region": "Asia"
   },
   {
     "name": "Montenegro",
-    "image": "data/images/me.png"
+    "image": "images/me.png",
+    "region": "Europe"
   },
   {
     "name": "Montserrat",
-    "image": "data/images/ms.png"
+    "image": "images/ms.png",
+    "region": "Territory"
   },
   {
     "name": "Morocco",
-    "image": "data/images/ma.png"
+    "image": "images/ma.png",
+    "region": "Africa"
   },
   {
     "name": "Mozambique",
-    "image": "data/images/mz.png"
+    "image": "images/mz.png",
+    "region": "Africa"
   },
   {
     "name": "Myanmar",
-    "image": "data/images/mm.png"
+    "image": "images/mm.png",
+    "region": "Asia"
   },
   {
     "name": "Namibia",
-    "image": "data/images/na.png"
+    "image": "images/na.png",
+    "region": "Africa"
   },
   {
     "name": "Nauru",
-    "image": "data/images/nr.png"
+    "image": "images/nr.png",
+    "region": "Oceania"
   },
   {
     "name": "Nepal",
-    "image": "data/images/np.png"
+    "image": "images/np.png",
+    "region": "Asia"
   },
   {
     "name": "Netherlands",
-    "image": "data/images/nl.png"
+    "image": "images/nl.png",
+    "region": "Europe"
   },
   {
     "name": "New Caledonia",
-    "image": "data/images/nc.png"
+    "image": "images/nc.png",
+    "region": "Territory"
   },
   {
     "name": "New Zealand",
-    "image": "data/images/nz.png"
+    "image": "images/nz.png",
+    "region": "Oceania"
   },
   {
     "name": "Nicaragua",
-    "image": "data/images/ni.png"
+    "image": "images/ni.png",
+    "region": "North America"
   },
   {
     "name": "Niger",
-    "image": "data/images/ne.png"
+    "image": "images/ne.png",
+    "region": "Africa"
   },
   {
     "name": "Nigeria",
-    "image": "data/images/ng.png"
+    "image": "images/ng.png",
+    "region": "Africa"
   },
   {
     "name": "Niue",
-    "image": "data/images/nu.png"
+    "image": "images/nu.png",
+    "region": "Territory"
   },
   {
     "name": "Norfolk Island",
-    "image": "data/images/nf.png"
+    "image": "images/nf.png",
+    "region": "Territory"
   },
   {
     "name": "North Macedonia",
-    "image": "data/images/mk.png"
+    "image": "images/mk.png",
+    "region": "Europe"
   },
   {
     "name": "Northern Ireland",
-    "image": "data/images/gb-nir.png"
+    "image": "images/gb-nir.png",
+    "region": "Territory"
   },
   {
     "name": "Northern Mariana Islands",
-    "image": "data/images/mp.png"
+    "image": "images/mp.png",
+    "region": "Territory"
   },
   {
     "name": "Norway",
-    "image": "data/images/no.png"
+    "image": "images/no.png",
+    "region": "Europe"
   },
   {
     "name": "Oman",
-    "image": "data/images/om.png"
+    "image": "images/om.png",
+    "region": "Asia"
   },
   {
     "name": "Pakistan",
-    "image": "data/images/pk.png"
+    "image": "images/pk.png",
+    "region": "Asia"
   },
   {
     "name": "Palau",
-    "image": "data/images/pw.png"
+    "image": "images/pw.png",
+    "region": "Oceania"
   },
   {
     "name": "Palestine",
-    "image": "data/images/ps.png"
+    "image": "images/ps.png",
+    "region": "Asia"
   },
   {
     "name": "Panama",
-    "image": "data/images/pa.png"
+    "image": "images/pa.png",
+    "region": "North America"
   },
   {
     "name": "Papua New Guinea",
-    "image": "data/images/pg.png"
+    "image": "images/pg.png",
+    "region": "Oceania"
   },
   {
     "name": "Paraguay",
-    "image": "data/images/py.png"
+    "image": "images/py.png",
+    "region": "South America"
   },
   {
     "name": "Peru",
-    "image": "data/images/pe.png"
+    "image": "images/pe.png",
+    "region": "South America"
   },
   {
     "name": "Philippines",
-    "image": "data/images/ph.png"
+    "image": "images/ph.png",
+    "region": "Asia"
   },
   {
     "name": "Pitcairn Islands",
-    "image": "data/images/pn.png"
+    "image": "images/pn.png",
+    "region": "Territory"
   },
   {
     "name": "Poland",
-    "image": "data/images/pl.png"
+    "image": "images/pl.png",
+    "region": "Europe"
   },
   {
     "name": "Portugal",
-    "image": "data/images/pt.png"
+    "image": "images/pt.png",
+    "region": "Europe"
   },
   {
     "name": "Puerto Rico",
-    "image": "data/images/pr.png"
+    "image": "images/pr.png",
+    "region": "Territory"
   },
   {
     "name": "Qatar",
-    "image": "data/images/qa.png"
+    "image": "images/qa.png",
+    "region": "Asia"
   },
   {
     "name": "Réunion",
-    "image": "data/images/re.png"
+    "image": "images/re.png",
+    "region": "Territory"
   },
   {
     "name": "Romania",
-    "image": "data/images/ro.png"
+    "image": "images/ro.png",
+    "region": "Europe"
   },
   {
     "name": "Russia",
-    "image": "data/images/ru.png"
+    "image": "images/ru.png",
+    "region": "Europe"
   },
   {
     "name": "Rwanda",
-    "image": "data/images/rw.png"
+    "image": "images/rw.png",
+    "region": "Africa"
   },
   {
     "name": "Saint Barthélemy",
-    "image": "data/images/bl.png"
+    "image": "images/bl.png",
+    "region": "Territory"
   },
   {
     "name": "Saint Helena, Ascension and Tristan da Cunha",
-    "image": "data/images/sh.png"
+    "image": "images/sh.png",
+    "region": "Territory"
   },
   {
     "name": "Saint Kitts and Nevis",
-    "image": "data/images/kn.png"
+    "image": "images/kn.png",
+    "region": "North America"
   },
   {
     "name": "Saint Lucia",
-    "image": "data/images/lc.png"
+    "image": "images/lc.png",
+    "region": "North America"
   },
   {
     "name": "Saint Martin",
-    "image": "data/images/mf.png"
+    "image": "images/mf.png",
+    "region": "Territory"
   },
   {
     "name": "Saint Pierre and Miquelon",
-    "image": "data/images/pm.png"
+    "image": "images/pm.png",
+    "region": "Territory"
   },
   {
     "name": "Saint Vincent and the Grenadines",
-    "image": "data/images/vc.png"
+    "image": "images/vc.png",
+    "region": "North America"
   },
   {
     "name": "Samoa",
-    "image": "data/images/ws.png"
+    "image": "images/ws.png",
+    "region": "Oceania"
   },
   {
     "name": "San Marino",
-    "image": "data/images/sm.png"
+    "image": "images/sm.png",
+    "region": "Europe"
   },
   {
     "name": "São Tomé and Príncipe",
-    "image": "data/images/st.png"
+    "image": "images/st.png",
+    "region": "Africa"
   },
   {
     "name": "Saudi Arabia",
-    "image": "data/images/sa.png"
+    "image": "images/sa.png",
+    "region": "Asia"
   },
   {
     "name": "Scotland",
-    "image": "data/images/gb-sct.png"
+    "image": "images/gb-sct.png",
+    "region": "Territory"
   },
   {
     "name": "Senegal",
-    "image": "data/images/sn.png"
+    "image": "images/sn.png",
+    "region": "Africa"
   },
   {
     "name": "Serbia",
-    "image": "data/images/rs.png"
+    "image": "images/rs.png",
+    "region": "Europe"
   },
   {
     "name": "Seychelles",
-    "image": "data/images/sc.png"
+    "image": "images/sc.png",
+    "region": "Africa"
   },
   {
     "name": "Sierra Leone",
-    "image": "data/images/sl.png"
+    "image": "images/sl.png",
+    "region": "Africa"
   },
   {
     "name": "Singapore",
-    "image": "data/images/sg.png"
+    "image": "images/sg.png",
+    "region": "Asia"
   },
   {
     "name": "Sint Maarten",
-    "image": "data/images/sx.png"
+    "image": "images/sx.png",
+    "region": "Territory"
   },
   {
     "name": "Slovakia",
-    "image": "data/images/sk.png"
+    "image": "images/sk.png",
+    "region": "Europe"
   },
   {
     "name": "Slovenia",
-    "image": "data/images/si.png"
+    "image": "images/si.png",
+    "region": "Europe"
   },
   {
     "name": "Solomon Islands",
-    "image": "data/images/sb.png"
+    "image": "images/sb.png",
+    "region": "Oceania"
   },
   {
     "name": "Somalia",
-    "image": "data/images/so.png"
+    "image": "images/so.png",
+    "region": "Africa"
   },
   {
     "name": "South Africa",
-    "image": "data/images/za.png"
+    "image": "images/za.png",
+    "region": "Africa"
   },
   {
     "name": "South Georgia",
-    "image": "data/images/gs.png"
+    "image": "images/gs.png",
+    "region": "Territory"
   },
   {
     "name": "South Sudan",
-    "image": "data/images/ss.png"
+    "image": "images/ss.png",
+    "region": "Africa"
   },
   {
     "name": "Spain",
-    "image": "data/images/es.png"
+    "image": "images/es.png",
+    "region": "Europe"
   },
   {
     "name": "Sri Lanka",
-    "image": "data/images/lk.png"
+    "image": "images/lk.png",
+    "region": "Asia"
   },
   {
     "name": "Sudan",
-    "image": "data/images/sd.png"
+    "image": "images/sd.png",
+    "region": "Africa"
   },
   {
     "name": "Suriname",
-    "image": "data/images/sr.png"
+    "image": "images/sr.png",
+    "region": "South America"
   },
   {
     "name": "Svalbard and Jan Mayen",
-    "image": "data/images/sj.png"
+    "image": "images/sj.png",
+    "region": "Territory"
   },
   {
     "name": "Sweden",
-    "image": "data/images/se.png"
+    "image": "images/se.png",
+    "region": "Europe"
   },
   {
     "name": "Switzerland",
-    "image": "data/images/ch.png"
+    "image": "images/ch.png",
+    "region": "Europe"
   },
   {
     "name": "Syria",
-    "image": "data/images/sy.png"
+    "image": "images/sy.png",
+    "region": "Asia"
   },
   {
     "name": "Taiwan",
-    "image": "data/images/tw.png"
+    "image": "images/tw.png",
+    "region": "Territory"
   },
   {
     "name": "Tajikistan",
-    "image": "data/images/tj.png"
+    "image": "images/tj.png",
+    "region": "Asia"
   },
   {
     "name": "Tanzania",
-    "image": "data/images/tz.png"
+    "image": "images/tz.png",
+    "region": "Africa"
   },
   {
     "name": "Thailand",
-    "image": "data/images/th.png"
+    "image": "images/th.png",
+    "region": "Asia"
   },
   {
     "name": "Timor-Leste",
-    "image": "data/images/tl.png"
+    "image": "images/tl.png",
+    "region": "Asia"
   },
   {
     "name": "Togo",
-    "image": "data/images/tg.png"
+    "image": "images/tg.png",
+    "region": "Africa"
   },
   {
     "name": "Tokelau",
-    "image": "data/images/tk.png"
+    "image": "images/tk.png",
+    "region": "Territory"
   },
   {
     "name": "Tonga",
-    "image": "data/images/to.png"
+    "image": "images/to.png",
+    "region": "Oceania"
   },
   {
     "name": "Trinidad and Tobago",
-    "image": "data/images/tt.png"
+    "image": "images/tt.png",
+    "region": "South America"
   },
   {
     "name": "Tunisia",
-    "image": "data/images/tn.png"
+    "image": "images/tn.png",
+    "region": "Africa"
   },
   {
     "name": "Turkey",
-    "image": "data/images/tr.png"
+    "image": "images/tr.png",
+    "region": "Asia"
   },
   {
     "name": "Turkmenistan",
-    "image": "data/images/tm.png"
+    "image": "images/tm.png",
+    "region": "Asia"
   },
   {
     "name": "Turks and Caicos Islands",
-    "image": "data/images/tc.png"
+    "image": "images/tc.png",
+    "region": "Territory"
   },
   {
     "name": "Tuvalu",
-    "image": "data/images/tv.png"
+    "image": "images/tv.png",
+    "region": "Oceania"
   },
   {
     "name": "Uganda",
-    "image": "data/images/ug.png"
+    "image": "images/ug.png",
+    "region": "Africa"
   },
   {
     "name": "Ukraine",
-    "image": "data/images/ua.png"
+    "image": "images/ua.png",
+    "region": "Europe"
   },
   {
     "name": "United Arab Emirates",
-    "image": "data/images/ae.png"
+    "image": "images/ae.png",
+    "region": "Asia"
   },
   {
     "name": "United Kingdom",
-    "image": "data/images/gb.png"
+    "image": "images/gb.png",
+    "region": "Europe"
   },
   {
     "name": "United States",
-    "image": "data/images/us.png"
+    "image": "images/us.png",
+    "region": "North America"
   },
   {
     "name": "United States Minor Outlying Islands",
-    "image": "data/images/um.png"
+    "image": "images/um.png",
+    "region": "Territory"
   },
   {
     "name": "Uruguay",
-    "image": "data/images/uy.png"
+    "image": "images/uy.png",
+    "region": "South America"
   },
   {
     "name": "Uzbekistan",
-    "image": "data/images/uz.png"
+    "image": "images/uz.png",
+    "region": "Asia"
   },
   {
     "name": "Vanuatu",
-    "image": "data/images/vu.png"
+    "image": "images/vu.png",
+    "region": "Oceania"
   },
   {
     "name": "Vatican City",
-    "image": "data/images/va.png"
+    "image": "images/va.png",
+    "region": "Europe"
   },
   {
     "name": "Venezuela",
-    "image": "data/images/ve.png"
+    "image": "images/ve.png",
+    "region": "South America"
   },
   {
     "name": "Vietnam",
-    "image": "data/images/vn.png"
+    "image": "images/vn.png",
+    "region": "Asia"
   },
   {
     "name": "British Virgin Islands",
-    "image": "data/images/vg.png"
+    "image": "images/vg.png",
+    "region": "Territory"
   },
   {
     "name": "United States Virgin Islands",
-    "image": "data/images/vi.png"
+    "image": "images/vi.png",
+    "region": "Territory"
   },
   {
     "name": "Wales",
-    "image": "data/images/gb-wls.png"
+    "image": "images/gb-wls.png",
+    "region": "Territory"
   },
   {
     "name": "Wallis and Futuna",
-    "image": "data/images/wf.png"
+    "image": "images/wf.png",
+    "region": "Territory"
   },
   {
     "name": "Western Sahara",
-    "image": "data/images/eh.png"
+    "image": "images/eh.png",
+    "region": "Territory"
   },
   {
     "name": "Yemen",
-    "image": "data/images/ye.png"
+    "image": "images/ye.png",
+    "region": "Asia"
   },
   {
     "name": "Zambia",
-    "image": "data/images/zm.png"
+    "image": "images/zm.png",
+    "region": "Africa"
   },
   {
     "name": "Zimbabwe",
-    "image": "data/images/zw.png"
+    "image": "images/zw.png",
+    "region": "Africa"
   }
 ]
