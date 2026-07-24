@@ -8,57 +8,51 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Fetch JSON Data Safely
+// 1. Fetch JSON Data & Auto-Start
 async function loadFlags() {
     try {
-        // Try loading from data folder first, then relative path
         let response = await fetch('data/flags.json?v=2').catch(() => null);
         if (!response || !response.ok) {
             response = await fetch('flags.json?v=2');
         }
         
         allFlags = await response.json();
-        console.log("✅ Flags loaded successfully:", allFlags);
+        console.log("✅ Flags loaded:", allFlags.length);
+        
         populateCountryDropdown(allFlags);
+        
+        // 🚀 AUTO-START THE GAME ON LOAD
+        startGame();
+
     } catch (error) {
-        console.error("❌ Error loading JSON file:", error);
-        alert("Could not load flags.json! Make sure the file exists in your project folder.");
+        console.error("❌ Error loading JSON:", error);
     }
 }
 
-// 2. Filter flags based on dropdown value
+// 2. Filter flags based on dropdown (Defaults to 'world' / all flags)
 function updateActiveFlags() {
     const selectElement = document.getElementById('region-select');
-    if (!selectElement) {
-        activeFlags = [...allFlags];
-        return;
-    }
+    const rawValue = selectElement ? selectElement.value.toLowerCase().trim() : 'world';
 
-    const rawValue = selectElement.value.toLowerCase().trim();
-
-    // If "World", "All", or blank is selected, load every flag
-    if (rawValue === 'world' || rawValue === 'all' || rawValue === '') {
+    // If 'world', empty, or 'all', keep every flag
+    if (!rawValue || rawValue.includes('world') || rawValue === 'all') {
         activeFlags = [...allFlags];
     } else {
         activeFlags = allFlags.filter(flag => {
-            if (!flag.region) return true; // keep if region isn't specified
+            if (!flag.region) return true; 
             return rawValue.includes(flag.region.toLowerCase());
         });
     }
 
     // Fallback safety net
     if (activeFlags.length === 0) {
-        console.warn("No flags matched region filter. Loading all flags as fallback.");
         activeFlags = [...allFlags];
     }
 }
 
-// 3. Start or Reset the Game
+// 3. Start / Reset Game
 function startGame() {
-    if (allFlags.length === 0) {
-        alert("Flags are still loading! Please wait a moment and try again.");
-        return;
-    }
+    if (allFlags.length === 0) return;
 
     const modeSelect = document.getElementById('mode-select');
     const selectedMode = modeSelect ? modeSelect.value : 'classic';
@@ -71,12 +65,20 @@ function startGame() {
     gameActive = true;
     clearInterval(timerInterval);
 
-    document.getElementById('score').textContent = score;
-    document.getElementById('feedback').textContent = "";
-    document.getElementById('guess-input').disabled = false;
-    document.getElementById('submit-btn').disabled = false;
+    // Update Score UI
+    const scoreEl = document.getElementById('score');
+    if (scoreEl) scoreEl.textContent = score;
 
-    // Toggle HUD elements depending on game mode
+    const feedbackEl = document.getElementById('feedback');
+    if (feedbackEl) feedbackEl.textContent = "";
+
+    // Enable input and submit elements
+    const guessInput = document.getElementById('guess-input');
+    const submitBtn = document.getElementById('submit-btn');
+    if (guessInput) guessInput.disabled = false;
+    if (submitBtn) submitBtn.disabled = false;
+
+    // Set up Mode HUDs
     const timerDisp = document.getElementById('timer-display');
     const livesDisp = document.getElementById('lives-display');
     if (timerDisp) timerDisp.style.display = selectedMode === 'timed' ? 'inline' : 'none';
@@ -85,14 +87,16 @@ function startGame() {
     updateLivesDisplay();
 
     if (selectedMode === 'timed') {
-        document.getElementById('timer').textContent = timeRemaining;
+        const timerEl = document.getElementById('timer');
+        if (timerEl) timerEl.textContent = timeRemaining;
         timerInterval = setInterval(updateTimer, 1000);
     }
 
+    // Pick and display the first flag immediately!
     nextFlag();
 }
 
-// 4. Populate datalist for autocomplete
+// 4. Populate autocomplete dropdown
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
@@ -109,7 +113,8 @@ function populateCountryDropdown(flagList) {
 // 5. Game Loop Controls
 function updateTimer() {
     timeRemaining--;
-    document.getElementById('timer').textContent = timeRemaining;
+    const timerEl = document.getElementById('timer');
+    if (timerEl) timerEl.textContent = timeRemaining;
     if (timeRemaining <= 0) {
         endGame("⏱️ Time's up!");
     }
@@ -121,10 +126,7 @@ function updateLivesDisplay() {
 }
 
 function nextFlag() {
-    if (!activeFlags || activeFlags.length === 0) {
-        console.error("No active flags available.");
-        return;
-    }
+    if (!activeFlags || activeFlags.length === 0) return;
 
     const randomIndex = Math.floor(Math.random() * activeFlags.length);
     currentFlag = activeFlags[randomIndex];
@@ -145,6 +147,8 @@ function checkGuess() {
     if (!gameActive) return;
 
     const inputField = document.getElementById('guess-input');
+    if (!inputField) return;
+
     const userGuess = inputField.value.trim();
     const modeSelect = document.getElementById('mode-select');
     const mode = modeSelect ? modeSelect.value : 'classic';
@@ -153,13 +157,21 @@ function checkGuess() {
 
     if (userGuess.toLowerCase() === currentFlag.name.toLowerCase()) {
         score++;
-        document.getElementById('score').textContent = score;
-        document.getElementById('feedback').textContent = "Correct! 🎉";
-        document.getElementById('feedback').style.color = "green";
+        const scoreEl = document.getElementById('score');
+        if (scoreEl) scoreEl.textContent = score;
+
+        const feedbackEl = document.getElementById('feedback');
+        if (feedbackEl) {
+            feedbackEl.textContent = "Correct! 🎉";
+            feedbackEl.style.color = "green";
+        }
         nextFlag();
     } else {
-        document.getElementById('feedback').textContent = "Wrong answer! ❌";
-        document.getElementById('feedback').style.color = "red";
+        const feedbackEl = document.getElementById('feedback');
+        if (feedbackEl) {
+            feedbackEl.textContent = "Wrong answer! ❌";
+            feedbackEl.style.color = "red";
+        }
 
         if (mode === 'survival') {
             lives--;
@@ -174,24 +186,35 @@ function checkGuess() {
 function endGame(message) {
     gameActive = false;
     clearInterval(timerInterval);
-    document.getElementById('guess-input').disabled = true;
-    document.getElementById('submit-btn').disabled = true;
-    document.getElementById('feedback').textContent = `${message} Final Score: ${score}`;
+
+    const guessInput = document.getElementById('guess-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const feedbackEl = document.getElementById('feedback');
+
+    if (guessInput) guessInput.disabled = true;
+    if (submitBtn) submitBtn.disabled = true;
+    if (feedbackEl) feedbackEl.textContent = `${message} Final Score: ${score}`;
 }
 
-// 6. Safe Initialization (Runs when page finishes loading)
+// 6. Start loading as soon as DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
     const guessInput = document.getElementById('guess-input');
+    const regionSelect = document.getElementById('region-select');
+    const modeSelect = document.getElementById('mode-select');
 
     if (startBtn) startBtn.addEventListener('click', startGame);
     if (submitBtn) submitBtn.addEventListener('click', checkGuess);
+    if (regionSelect) regionSelect.addEventListener('change', startGame);
+    if (modeSelect) modeSelect.addEventListener('change', startGame);
+
     if (guessInput) {
         guessInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkGuess();
         });
     }
 
+    // Load JSON and immediately start game
     loadFlags();
 });
