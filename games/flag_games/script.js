@@ -7,7 +7,26 @@ let lives = 3;
 let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
+// Screen Navigation Functions (Global Scope for inline onclicks)
+function showMainMenu() {
+    document.getElementById('main-menu').removeAttribute('hidden');
+    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
+    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
+}
 
+function showSinglePlayer() {
+    document.getElementById('main-menu').setAttribute('hidden', 'true');
+    document.getElementById('singleplayer-screen').removeAttribute('hidden');
+    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
+}
+
+function showMultiplayer() {
+    document.getElementById('main-menu').setAttribute('hidden', 'true');
+    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
+    document.getElementById('multiplayer-screen').removeAttribute('hidden');
+}
+
+// ... Rest of your existing game script below ...
 // 1. Fetch JSON Data safely across GitHub Pages paths
 async function loadFlags() {
     const paths = [

@@ -1,16 +1,16 @@
 <div id="game-container">
     <h1>Guess the Flag!</h1>
 
-    <!-- 1. MAIN MENU (Visible by default) -->
+    <!-- 1. MAIN MENU -->
     <div id="main-menu">
         <h2>Choose Game Mode</h2>
-        <button type="button" id="choose-sp-btn" class="menu-btn">🎮 Single Player</button>
-        <button type="button" id="choose-mp-btn" class="menu-btn">🌐 Multiplayer</button>
+        <button type="button" class="menu-btn" onclick="showSinglePlayer()">🎮 Single Player</button>
+        <button type="button" class="menu-btn" onclick="showMultiplayer()">🌐 Multiplayer</button>
     </div>
 
     <!-- 2. SINGLE PLAYER SCREEN -->
     <div id="singleplayer-screen" hidden>
-        <button type="button" class="back-btn">← Back to Menu</button>
+        <button type="button" class="back-btn" onclick="showMainMenu()">← Back to Menu</button>
         
         <div class="settings">
             <label>Region:
@@ -59,7 +59,7 @@
 
     <!-- 3. MULTIPLAYER SCREEN -->
     <div id="multiplayer-screen" hidden>
-        <button type="button" class="back-btn">← Back to Menu</button>
+        <button type="button" class="back-btn" onclick="showMainMenu()">← Back to Menu</button>
         
         <h2>Multiplayer Lobby</h2>
         <div class="lobby-controls">
