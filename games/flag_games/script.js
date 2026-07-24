@@ -8,23 +8,35 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Screen Navigation Functions
+// 1. Screen Navigation Functions (Safe against null crashes)
 function showMainMenu() {
-    document.getElementById('main-menu').removeAttribute('hidden');
-    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
-    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
+    const main = document.getElementById('main-menu');
+    const sp = document.getElementById('singleplayer-screen');
+    const mp = document.getElementById('multiplayer-screen');
+
+    if (main) main.removeAttribute('hidden');
+    if (sp) sp.setAttribute('hidden', 'true');
+    if (mp) mp.setAttribute('hidden', 'true');
 }
 
 function showSinglePlayer() {
-    document.getElementById('main-menu').setAttribute('hidden', 'true');
-    document.getElementById('singleplayer-screen').removeAttribute('hidden');
-    document.getElementById('multiplayer-screen').setAttribute('hidden', 'true');
+    const main = document.getElementById('main-menu');
+    const sp = document.getElementById('singleplayer-screen');
+    const mp = document.getElementById('multiplayer-screen');
+
+    if (main) main.setAttribute('hidden', 'true');
+    if (sp) sp.removeAttribute('hidden');
+    if (mp) mp.setAttribute('hidden', 'true');
 }
 
 function showMultiplayer() {
-    document.getElementById('main-menu').setAttribute('hidden', 'true');
-    document.getElementById('singleplayer-screen').setAttribute('hidden', 'true');
-    document.getElementById('multiplayer-screen').removeAttribute('hidden');
+    const main = document.getElementById('main-menu');
+    const sp = document.getElementById('singleplayer-screen');
+    const mp = document.getElementById('multiplayer-screen');
+
+    if (main) main.setAttribute('hidden', 'true');
+    if (sp) sp.setAttribute('hidden', 'true');
+    if (mp) mp.removeAttribute('hidden');
 }
 
 // 2. Fetch JSON Data safely across GitHub Pages paths
@@ -87,7 +99,6 @@ function startGame() {
         return;
     }
 
-    // Reveal Game Board
     const gameArea = document.getElementById('game-area');
     if (gameArea) {
         gameArea.removeAttribute('hidden');
@@ -236,16 +247,6 @@ function endGame(message) {
 
 // 7. Initialization & Event Listeners
 function init() {
-    // Navigation listeners
-    const spBtn = document.getElementById('choose-sp-btn');
-    const mpBtn = document.getElementById('choose-mp-btn');
-    const backBtns = document.querySelectorAll('.back-btn');
-
-    if (spBtn) spBtn.addEventListener('click', showSinglePlayer);
-    if (mpBtn) mpBtn.addEventListener('click', showMultiplayer);
-    backBtns.forEach(btn => btn.addEventListener('click', showMainMenu));
-
-    // Gameplay listeners
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');
     const guessInput = document.getElementById('guess-input');
@@ -262,7 +263,6 @@ function init() {
     loadFlags();
 }
 
-// Safely trigger initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
