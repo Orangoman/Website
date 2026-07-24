@@ -8,44 +8,63 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
-// 1. Load Data
+// 1. Fetch JSON Data Safely
 async function loadFlags() {
     try {
-        const response = await fetch('data/flags.json?v=2');
+        // Try loading from data folder first, then relative path
+        let response = await fetch('data/flags.json?v=2').catch(() => null);
+        if (!response || !response.ok) {
+            response = await fetch('flags.json?v=2');
+        }
+        
         allFlags = await response.json();
+        console.log("✅ Flags loaded successfully:", allFlags);
         populateCountryDropdown(allFlags);
     } catch (error) {
-        console.error("Error loading JSON:", error);
+        console.error("❌ Error loading JSON file:", error);
+        alert("Could not load flags.json! Make sure the file exists in your project folder.");
     }
 }
 
-// 2. Filter flags SAFELY based on HTML value
+// 2. Filter flags based on dropdown value
 function updateActiveFlags() {
-    const htmlValue = document.getElementById('region-select').value;
+    const selectElement = document.getElementById('region-select');
+    if (!selectElement) {
+        activeFlags = [...allFlags];
+        return;
+    }
 
-    activeFlags = allFlags.filter(flag => {
-        // If the country doesn't have a region in JSON, keep it so it doesn't break
-        if (!flag.region) return true; 
+    const rawValue = selectElement.value.toLowerCase().trim();
 
-        // Check if the region exists inside your HTML value string
-        return htmlValue.toLowerCase().includes(flag.region.toLowerCase());
-    });
+    // If "World", "All", or blank is selected, load every flag
+    if (rawValue === 'world' || rawValue === 'all' || rawValue === '') {
+        activeFlags = [...allFlags];
+    } else {
+        activeFlags = allFlags.filter(flag => {
+            if (!flag.region) return true; // keep if region isn't specified
+            return rawValue.includes(flag.region.toLowerCase());
+        });
+    }
 
-    // SAFETY NET: If the filtered list is empty, default to showing all flags
+    // Fallback safety net
     if (activeFlags.length === 0) {
-        console.warn("No flags matched your filter! Defaulting to all flags.");
+        console.warn("No flags matched region filter. Loading all flags as fallback.");
         activeFlags = [...allFlags];
     }
 }
 
-// 3. Start Game (Calls updateActiveFlags here)
+// 3. Start or Reset the Game
 function startGame() {
-    const selectedMode = document.getElementById('mode-select').value;
+    if (allFlags.length === 0) {
+        alert("Flags are still loading! Please wait a moment and try again.");
+        return;
+    }
 
-    // Filter flags safely before picking the first flag
+    const modeSelect = document.getElementById('mode-select');
+    const selectedMode = modeSelect ? modeSelect.value : 'classic';
+
     updateActiveFlags();
 
-    // Reset Stats
     score = 0;
     lives = 3;
     timeRemaining = 60;
@@ -57,9 +76,12 @@ function startGame() {
     document.getElementById('guess-input').disabled = false;
     document.getElementById('submit-btn').disabled = false;
 
-    // Setup UI based on mode
-    document.getElementById('timer-display').style.display = selectedMode === 'timed' ? 'inline' : 'none';
-    document.getElementById('lives-display').style.display = selectedMode === 'survival' ? 'inline' : 'none';
+    // Toggle HUD elements depending on game mode
+    const timerDisp = document.getElementById('timer-display');
+    const livesDisp = document.getElementById('lives-display');
+    if (timerDisp) timerDisp.style.display = selectedMode === 'timed' ? 'inline' : 'none';
+    if (livesDisp) livesDisp.style.display = selectedMode === 'survival' ? 'inline' : 'none';
+    
     updateLivesDisplay();
 
     if (selectedMode === 'timed') {
@@ -70,12 +92,13 @@ function startGame() {
     nextFlag();
 }
 
-// 4. Populate autocomplete dropdown
+// 4. Populate datalist for autocomplete
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
+    if (!datalist) return;
     datalist.innerHTML = '';
-    const sortedNames = flagList.map(c => c.name).sort();
     
+    const sortedNames = flagList.map(c => c.name).sort();
     sortedNames.forEach(name => {
         const option = document.createElement('option');
         option.value = name;
@@ -83,7 +106,7 @@ function populateCountryDropdown(flagList) {
     });
 }
 
-// 5. Game Loop Functions
+// 5. Game Loop Controls
 function updateTimer() {
     timeRemaining--;
     document.getElementById('timer').textContent = timeRemaining;
@@ -93,15 +116,29 @@ function updateTimer() {
 }
 
 function updateLivesDisplay() {
-    document.getElementById('lives').textContent = "❤️".repeat(lives);
+    const livesEl = document.getElementById('lives');
+    if (livesEl) livesEl.textContent = "❤️".repeat(lives);
 }
 
 function nextFlag() {
+    if (!activeFlags || activeFlags.length === 0) {
+        console.error("No active flags available.");
+        return;
+    }
+
     const randomIndex = Math.floor(Math.random() * activeFlags.length);
     currentFlag = activeFlags[randomIndex];
-    document.getElementById('flag-image').src = currentFlag.image;
-    document.getElementById('guess-input').value = "";
-    document.getElementById('guess-input').focus();
+
+    const flagImg = document.getElementById('flag-image');
+    if (flagImg && currentFlag) {
+        flagImg.src = currentFlag.image;
+    }
+
+    const input = document.getElementById('guess-input');
+    if (input) {
+        input.value = "";
+        input.focus();
+    }
 }
 
 function checkGuess() {
@@ -109,7 +146,8 @@ function checkGuess() {
 
     const inputField = document.getElementById('guess-input');
     const userGuess = inputField.value.trim();
-    const mode = document.getElementById('mode-select').value;
+    const modeSelect = document.getElementById('mode-select');
+    const mode = modeSelect ? modeSelect.value : 'classic';
 
     if (!userGuess) return;
 
@@ -141,11 +179,19 @@ function endGame(message) {
     document.getElementById('feedback').textContent = `${message} Final Score: ${score}`;
 }
 
-// Event Listeners
-document.getElementById('start-btn').addEventListener('click', startGame);
-document.getElementById('submit-btn').addEventListener('click', checkGuess);
-document.getElementById('guess-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') checkGuess();
-});
+// 6. Safe Initialization (Runs when page finishes loading)
+window.addEventListener('DOMContentLoaded', () => {
+    const startBtn = document.getElementById('start-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const guessInput = document.getElementById('guess-input');
 
-loadFlags();
+    if (startBtn) startBtn.addEventListener('click', startGame);
+    if (submitBtn) submitBtn.addEventListener('click', checkGuess);
+    if (guessInput) {
+        guessInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkGuess();
+        });
+    }
+
+    loadFlags();
+});
