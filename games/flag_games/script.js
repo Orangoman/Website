@@ -8,6 +8,10 @@ let timeRemaining = 60;
 let timerInterval = null;
 let gameActive = false;
 
+// Skip button cooldown variables
+let canSkip = true;
+let skipCooldownTimer = null;
+
 // Real-Time PeerJS Networking Variables
 let peer = null;
 let connections = []; // Host tracks clients
@@ -206,7 +210,6 @@ function updateWaitingRoomUI() {
         playerList.innerHTML = roomPlayers.map(p => `<li>${p.name} ${p.isHost ? '👑 (Host)' : ''}</li>`).join('');
     }
 
-    // Disable settings dropdowns for guests
     if (settingsPanel) {
         const selects = settingsPanel.querySelectorAll('select');
         selects.forEach(s => s.disabled = !isHost);
@@ -227,7 +230,7 @@ function updateLeaderboardUI() {
     const listEl = document.getElementById('mp-leaderboard-list');
     if (!listEl) return;
 
-    // Sort players by highest score
+    // Sort players by highest cumulative score
     const sorted = [...roomPlayers].sort((a, b) => b.score - a.score);
 
     listEl.innerHTML = sorted.map((p, idx) => `
@@ -250,10 +253,7 @@ function launchMultiplayerBoard() {
     document.getElementById('mp-active-game').removeAttribute('hidden');
     document.getElementById('round-over-box').setAttribute('hidden', 'true');
 
-    // Reset round scores
-    roomPlayers.forEach(p => p.score = 0);
     updateLeaderboardUI();
-
     startGameEngine(mpRegion, mpMode);
 }
 
@@ -267,7 +267,7 @@ function resetAndStartMpRound() {
     document.getElementById('mp-active-game').removeAttribute('hidden');
     document.getElementById('round-over-box').setAttribute('hidden', 'true');
 
-    roomPlayers.forEach(p => p.score = 0);
+    // SCORES NOW PERSIST CUMULATIVELY ACROSS ROUNDS
     updateLeaderboardUI();
 
     if (isHost) {
@@ -317,11 +317,75 @@ function filterFlags(selectedRegion) {
     if (activeFlags.length === 0) activeFlags = [...allFlags];
 }
 
-// 5. Game Core Engine
+// 5. Skip Button Logic (10s Cooldown)
+function skipFlag() {
+    if (!gameActive || !canSkip) return;
+
+    canSkip = false;
+    nextFlag();
+
+    const feedbackEl = isMultiplayerMode ? document.getElementById('mp-feedback') : document.getElementById('feedback');
+    if (feedbackEl) {
+        feedbackEl.textContent = "Skipped! ⏩";
+        feedbackEl.style.color = "#6c757d";
+    }
+
+    startSkipCooldown();
+}
+
+function startSkipCooldown() {
+    let cooldown = 10;
+    const skipBtn = document.getElementById('skip-btn');
+    const mpSkipBtn = document.getElementById('mp-skip-btn');
+
+    const updateBtnUI = (seconds) => {
+        if (skipBtn) {
+            skipBtn.disabled = true;
+            skipBtn.textContent = `Skip (${seconds}s)`;
+        }
+        if (mpSkipBtn) {
+            mpSkipBtn.disabled = true;
+            mpSkipBtn.textContent = `Skip (${seconds}s)`;
+        }
+    };
+
+    updateBtnUI(cooldown);
+    clearInterval(skipCooldownTimer);
+
+    skipCooldownTimer = setInterval(() => {
+        cooldown--;
+        if (cooldown > 0) {
+            updateBtnUI(cooldown);
+        } else {
+            clearInterval(skipCooldownTimer);
+            canSkip = true;
+            resetSkipButtonUI();
+        }
+    }, 1000);
+}
+
+function resetSkipButtonUI() {
+    clearInterval(skipCooldownTimer);
+    canSkip = true;
+    const skipBtn = document.getElementById('skip-btn');
+    const mpSkipBtn = document.getElementById('mp-skip-btn');
+
+    if (skipBtn) {
+        skipBtn.disabled = false;
+        skipBtn.textContent = "Skip";
+    }
+    if (mpSkipBtn) {
+        mpSkipBtn.disabled = false;
+        mpSkipBtn.textContent = "Skip";
+    }
+}
+
+// 6. Game Core Engine
 function startGame() { // Single player entry
     const reg = document.getElementById('region-select')?.value || 'World';
     const mode = document.getElementById('mode-select')?.value || 'classic';
     document.getElementById('game-area')?.removeAttribute('hidden');
+    score = 0; // Reset score for brand new single player game
     startGameEngine(reg, mode);
 }
 
@@ -332,8 +396,14 @@ function startGameEngine(region, mode) {
     }
 
     filterFlags(region);
+    resetSkipButtonUI();
 
-    score = 0;
+    // In multiplayer, resume score from cumulative room total
+    if (isMultiplayerMode) {
+        const self = roomPlayers.find(p => p.name === myPlayerName);
+        score = self ? self.score : 0;
+    }
+
     lives = 3;
     timeRemaining = 60;
     gameActive = true;
@@ -369,7 +439,7 @@ function startGameEngine(region, mode) {
     nextFlag();
 }
 
-// 6. Autocomplete Datalist
+// 7. Autocomplete Datalist
 function populateCountryDropdown(flagList) {
     const datalist = document.getElementById('country-options');
     if (!datalist) return;
@@ -383,7 +453,7 @@ function populateCountryDropdown(flagList) {
     });
 }
 
-// 7. Game Loop & Guess Checks
+// 8. Game Loop & Guess Checks
 function updateTimer(mode) {
     timeRemaining--;
     const timerEl = isMultiplayerMode ? document.getElementById('mp-timer') : document.getElementById('timer');
@@ -434,7 +504,7 @@ function checkGuess() {
             feedbackEl.style.color = "green";
         }
 
-        // Send real-time multiplayer score sync
+        // Real-time multiplayer score sync
         if (isMultiplayerMode) {
             const self = roomPlayers.find(p => p.name === myPlayerName);
             if (self) self.score = score;
@@ -481,12 +551,12 @@ function endGame(message) {
 
         roundOverBox.removeAttribute('hidden');
 
-        // Calculate Round Winner
+        // Leaderboards reflect total cumulative scores
         const sorted = [...roomPlayers].sort((a, b) => b.score - a.score);
         const winner = sorted[0];
 
         if (winnerText) {
-            winnerText.innerHTML = `<strong>${winner.name}</strong> won the round with <strong>${winner.score} points</strong>! 🎉`;
+            winnerText.innerHTML = `Leader: <strong>${winner.name}</strong> with <strong>${winner.score} total points</strong>! 🏆`;
         }
 
         if (playAgainBtn) {
@@ -499,7 +569,7 @@ function endGame(message) {
     }
 }
 
-// 8. Initialization
+// 9. Initialization
 function init() {
     const startBtn = document.getElementById('start-btn');
     const submitBtn = document.getElementById('submit-btn');

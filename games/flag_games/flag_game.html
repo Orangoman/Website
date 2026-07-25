@@ -14,10 +14,17 @@
         .menu-btn:hover { background-color: #0056b3; }
         .back-btn { margin-bottom: 15px; padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #ccc; background: #e9ecef; }
         .settings { margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .input-area { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; margin-top: 15px; }
-        #guess-input, #mp-guess-input { padding: 10px; font-size: 16px; width: 220px; border: 1px solid #ccc; border-radius: 6px; }
-        button { padding: 10px 16px; font-size: 16px; cursor: pointer; border-radius: 6px; border: none; background-color: #28a745; color: white; font-weight: bold; }
-        button:hover { opacity: 0.9; }
+        .input-area { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+        #guess-input, #mp-guess-input { padding: 10px; font-size: 16px; width: 200px; border: 1px solid #ccc; border-radius: 6px; }
+        
+        button { padding: 10px 16px; font-size: 16px; cursor: pointer; border-radius: 6px; border: none; font-weight: bold; }
+        .submit-btn { background-color: #28a745; color: white; }
+        .submit-btn:hover { opacity: 0.9; }
+        
+        .skip-btn { background-color: #fd7e14; color: white; }
+        .skip-btn:hover { background-color: #e8590c; }
+        .skip-btn:disabled { background-color: #adb5bd; cursor: not-allowed; }
+
         #flag-image, #mp-flag-image { max-width: 100%; height: auto; border: 2px solid #ddd; border-radius: 8px; margin-top: 10px; }
         #player-list { list-style: none; padding: 0; }
         #player-list li { background: #e9ecef; margin: 5px auto; width: 240px; padding: 8px; border-radius: 6px; font-weight: bold; }
@@ -71,7 +78,7 @@
                 </select>
             </label>
             
-            <button type="button" id="start-btn">Start Game</button>
+            <button type="button" id="start-btn" class="submit-btn">Start Game</button>
         </div>
 
         <hr>
@@ -86,7 +93,8 @@
             <img id="flag-image" src="" alt="Guess this flag" width="300">
             <div class="input-area">
                 <input type="text" id="guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
-                <button type="button" id="submit-btn">Submit</button>
+                <button type="button" id="submit-btn" class="submit-btn">Submit</button>
+                <button type="button" id="skip-btn" class="skip-btn" onclick="skipFlag()">Skip</button>
             </div>
         </div>
 
@@ -101,10 +109,10 @@
         <div class="lobby-controls" id="lobby-setup">
             <input type="text" id="player-name" placeholder="Enter Your Nickname">
             <br><br>
-            <button type="button" id="create-room-btn" onclick="createLobby()">Create Lobby</button>
+            <button type="button" id="create-room-btn" class="submit-btn" onclick="createLobby()">Create Lobby</button>
             <br><br>
             <input type="text" id="room-code-input" placeholder="Room Code (e.g. ABCD)">
-            <button type="button" id="join-room-btn" onclick="joinLobby()">Join Lobby</button>
+            <button type="button" id="join-room-btn" class="submit-btn" onclick="joinLobby()">Join Lobby</button>
         </div>
 
         <div id="waiting-room" hidden>
@@ -122,6 +130,7 @@
                         <option value="South America">South America</option>
                         <option value="Africa">Africa</option>
                         <option value="Oceania">Oceania</option>
+                        <option value="Territories">Territories</option>
                     </select>
                 </label>
 
@@ -138,7 +147,7 @@
             <h4>Players Joined:</h4>
             <ul id="player-list"></ul>
             <br>
-            <button type="button" id="start-multiplayer-btn" onclick="startMultiplayerGame()" hidden>Start Game for Everyone</button>
+            <button type="button" id="start-multiplayer-btn" class="submit-btn" onclick="startMultiplayerGame()" hidden>Start Game for Everyone</button>
         </div>
 
         <!-- Shared Flag Board & Live Leaderboard for Multiplayer -->
@@ -147,7 +156,7 @@
             
             <!-- Live Leaderboard -->
             <div class="leaderboard-box">
-                <h3>🏆 Live Leaderboard</h3>
+                <h3>🏆 Cumulative Leaderboard</h3>
                 <ul id="mp-leaderboard-list" class="leaderboard-list"></ul>
             </div>
 
@@ -160,7 +169,8 @@
                 <img id="mp-flag-image" src="" alt="Guess this flag" width="300">
                 <div class="input-area">
                     <input type="text" id="mp-guess-input" list="country-options" placeholder="Start typing..." autocomplete="off">
-                    <button type="button" id="mp-submit-btn">Submit</button>
+                    <button type="button" id="mp-submit-btn" class="submit-btn">Submit</button>
+                    <button type="button" id="mp-skip-btn" class="skip-btn" onclick="skipFlag()">Skip</button>
                 </div>
                 <p id="mp-feedback"></p>
             </div>
@@ -169,7 +179,7 @@
             <div id="round-over-box" hidden>
                 <h2>🏁 Round Ended!</h2>
                 <p id="round-winner-text"></p>
-                <button type="button" id="mp-play-again-btn" onclick="playAgainMultiplayer()" hidden>🔄 Play Next Round</button>
+                <button type="button" id="mp-play-again-btn" class="submit-btn" onclick="playAgainMultiplayer()" hidden>🔄 Play Next Round</button>
             </div>
         </div>
     </div>
@@ -177,6 +187,6 @@
 
 <datalist id="country-options"></datalist>
 
-<script src="script.js?v=3000"></script>
+<script src="script.js?v=4000"></script>
 </body>
 </html>
